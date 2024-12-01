@@ -1,30 +1,45 @@
-from collections import Counter
+def part1() -> int:
+    list1 = []
+    list2 = []
 
-# part 1
-list1 = []
-list2 = []
-
-with open("input1.txt", "r") as inp:
-    while line := inp.readline():
-        n, m = line.split()
-        list1.append(int(n))
-        list2.append(int(m))
+    with open("../input1.txt", "r") as inp:
+        while line := inp.readline():
+            n, m = line.split()
+            list1.append(int(n))
+            list2.append(int(m))
 
     list1.sort()
     list2.sort()
 
-dist_sum = 0
+    dist_sum = 0
 
-for j, k in zip(list1, list2):
-    dist_sum += abs(j - k)
+    for j, k in zip(list1, list2):
+        dist_sum += abs(j - k)
 
-print(dist_sum)
+    return dist_sum
 
-# part 2
-list2_counts = Counter(list2)
-similarity_score = 0
 
-for k in list1:
-    similarity_score += k * list2_counts[k]
+def part2() -> int:
+    list1 = []
+    list2 = {}
 
-print(similarity_score)
+    with open("../input1.txt", "r") as inp:
+        while line := inp.readline():
+            n, m = line.split()
+            list1.append(int(n))
+
+            m = int(m)
+            if m in list2:
+                list2[m] += 1
+            else:
+                list2[m] = 1
+
+    similarity_score = 0
+
+    for k in list1:
+        similarity_score += k * list2.get(k, 0)
+
+    return similarity_score
+
+print(part1())
+print(part2())
