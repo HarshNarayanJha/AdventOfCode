@@ -1,32 +1,33 @@
-use std::time::Instant;
+use crate::day::{Day, Solution};
 
-pub fn part1() -> u32 {
-    let input = include_str!("../../data/input0.txt");
-
-    0
+pub struct DayN {
+    day: Day,
 }
 
-pub fn part2() -> u32 {
-    let input = include_str!("../../data/input0.txt");
-
-    0
+impl DayN {
+    pub fn new() -> Self {
+        Self { day: Day::new(N) }
+    }
 }
 
-pub fn solve() {
-    println!("\nDay {}", 0);
+impl Solution for DayN {
+    fn part1(&self) -> u32 {
+        let input = include_str!("../../data/inputN.txt");
 
-    let now = Instant::now();
-    println!("Part 1 -> {}", part1());
-    let elasped = now.elapsed();
+        0
+    }
 
-    println!("Took {:.5}ms", elasped.as_secs_f64() * 1000.0);
+    fn part2(&self) -> u32 {
+        let input = include_str!("../../data/inputN.txt");
 
-    println!();
+        0
+    }
 
-    let now = Instant::now();
-    println!("Part 2 -> {}", part2());
-    let elasped = now.elapsed();
-    println!("Took {:.5}ms", elasped.as_secs_f64() * 1000.0);
+    fn get_day(&self) -> u32 {
+        self.day.day
+    }
+}
 
-    println!("{:-^30}", "-");
+pub fn run() {
+    DayN::new().solve();
 }
