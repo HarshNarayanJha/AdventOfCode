@@ -21,7 +21,7 @@ int main() {
 int part1() {
   string line;
   ifstream input;
-  input.open("../input1.txt", ios::in);
+  input.open("../data/input1.txt", ios::in);
 
   vector<int> list1;
   vector<int> list2;
@@ -63,7 +63,7 @@ int part1() {
 int part2() {
   string line;
   ifstream input;
-  input.open("../input1.txt", ios::in);
+  input.open("../data/input1.txt", ios::in);
 
   vector<int> list1;
   unordered_map<int, int> map2;
