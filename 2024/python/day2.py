@@ -38,25 +38,19 @@ def part2() -> int:
         for line in lines:
             reports.append(list(map(int, line.split())))
 
-    results = []
+    safe_reports = 0
 
     for report in reports:
-        if (
-            is_report_safe(report)
-            or is_report_safe(results[1:])
-            or is_report_safe(results[:-1])
-        ):
-            results.append(True)
+        if is_report_safe(report):
+            safe_reports += 1
             continue
 
         for i, level in enumerate(report):
             if is_report_safe(report[:i] + report[i + 1 :]):
-                results.append(True)
+                safe_reports += 1
                 break
-        else:
-            results.append(False)
 
-    return results.count(True)
+    return safe_reports
 
 
 print(part1())
