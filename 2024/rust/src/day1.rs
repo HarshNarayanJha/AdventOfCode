@@ -1,7 +1,8 @@
+use std::time::Instant;
 use std::{collections::HashMap, iter::zip};
 
 pub fn part1() -> u32 {
-    let input = include_str!("../../input1.txt");
+    let input = include_str!("../../data/input1.txt");
 
     let mut list1: Vec<u32> = vec![];
     let mut list2: Vec<u32> = vec![];
@@ -26,7 +27,7 @@ pub fn part1() -> u32 {
 }
 
 pub fn part2() -> u32 {
-    let input = include_str!("../../input1.txt");
+    let input = include_str!("../../data/input1.txt");
 
     let mut list1: Vec<u32> = vec![];
     let mut map2: HashMap<u32, u32> = HashMap::new();
@@ -54,4 +55,23 @@ pub fn part2() -> u32 {
     }
 
     sim_score
+}
+
+pub fn solve() {
+    println!("\nDay {}", 1);
+
+    let now = Instant::now();
+    println!("Part 1 -> {}", part1());
+    let elasped = now.elapsed();
+
+    println!("Took {:.5}ms", elasped.as_secs_f64() * 1000.0);
+
+    println!();
+
+    let now = Instant::now();
+    println!("Part 2 -> {}", part2());
+    let elasped = now.elapsed();
+    println!("Took {:.5}ms", elasped.as_secs_f64() * 1000.0);
+
+    println!("{:-^30}", "-");
 }
