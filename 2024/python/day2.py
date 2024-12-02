@@ -19,15 +19,13 @@ def part1() -> int:
         for line in lines:
             reports.append(list(map(int, line.split())))
 
-    results = []
+    safe_reports = 0
 
     for report in reports:
         if is_report_safe(report):
-            results.append(True)
-        else:
-            results.append(False)
+            safe_reports += 1
 
-    return results.count(True)
+    return safe_reports
 
 
 def part2() -> int:
