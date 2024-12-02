@@ -2,7 +2,7 @@ def part1() -> int:
     list1 = []
     list2 = []
 
-    with open("../input1.txt", "r") as inp:
+    with open("../data/input1.txt", "r") as inp:
         while line := inp.readline():
             n, m = line.split()
             list1.append(int(n))
@@ -23,7 +23,7 @@ def part2() -> int:
     list1 = []
     list2 = {}
 
-    with open("../input1.txt", "r") as inp:
+    with open("../data/input1.txt", "r") as inp:
         while line := inp.readline():
             n, m = line.split()
             list1.append(int(n))
