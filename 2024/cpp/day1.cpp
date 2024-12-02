@@ -10,15 +10,15 @@
 
 using namespace std;
 
-int day1();
-int day2();
+int part1();
+int part2();
 
 int main() {
-  cout << day1() << endl;
-  cout << day2() << endl;
+  cout << part1() << endl;
+  cout << part2() << endl;
 }
 
-int day1() {
+int part1() {
   string line;
   ifstream input;
   input.open("../input1.txt", ios::in);
@@ -60,7 +60,7 @@ int day1() {
   return dist_sum;
 }
 
-int day2() {
+int part2() {
   string line;
   ifstream input;
   input.open("../input1.txt", ios::in);
