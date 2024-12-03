@@ -14,24 +14,39 @@ impl Day3 {
 impl Solution for Day3 {
     fn part1(&self) -> u32 {
         let input = include_str!("../../data/input3.txt");
-        let instruction = input.lines().fold(String::new(), |acc, x| acc + x);
+        let instruction = input.lines().collect::<String>();
 
         let mul_pat = Regex::new(r"mul\((\d+),(\d+)\)").unwrap();
 
-        let mut results = vec![];
-        for (_, [num1, num2]) in mul_pat.captures_iter(&instruction).map(|c| c.extract()) {
-            results.push((num1.parse::<u32>().unwrap(), num2.parse::<u32>().unwrap()));
-        }
-
-        let result: u32 = results.iter().map(|(a, b)| a * b).sum();
-
-        result
+        mul_pat
+            .captures_iter(&instruction)
+            .map(|c| c.extract())
+            .map(|(_, [num1, num2])| num1.parse::<u32>().unwrap() * num2.parse::<u32>().unwrap())
+            .sum()
     }
 
     fn part2(&self) -> u32 {
         let input = include_str!("../../data/input3.txt");
+        let instruction = input.lines().collect::<String>();
 
-        0
+        let mul_pat = Regex::new(r"(mul\((\d+),(\d+)\))|(do\(\))|(don\'t\(\))").unwrap();
+
+        mul_pat
+            .captures_iter(&instruction)
+            .fold((0, true), |(result, enabled), m| {
+                let captures = m.iter().filter_map(|x| x).collect::<Vec<_>>();
+
+                match captures.len() {
+                    4 if enabled => {
+                        let num1 = captures[2].as_str().parse::<u32>().unwrap();
+                        let num2 = captures[3].as_str().parse::<u32>().unwrap();
+                        (result + num1 * num2, enabled)
+                    }
+                    2 => (result, captures[0].as_str() == "do()"),
+                    _ => (result, enabled),
+                }
+            })
+            .0
     }
 
     fn get_day(&self) -> u32 {
