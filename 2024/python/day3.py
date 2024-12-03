@@ -28,7 +28,6 @@ def part2() -> int:
     donts = dont_pat.finditer(instruction)
 
     enabled = True
-
     result = 0
 
     arr = sorted(list(muls) + list(dos) + list(donts), key=lambda x: x.span()[0])

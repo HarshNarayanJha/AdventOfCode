@@ -20,11 +20,11 @@ pub trait Solution {
 
         let now = Instant::now();
         println!("🎯 Part 1 -> {}{}{}", "\x1b[36m", self.part1(), "\x1b[0m");
-        let elasped = now.elapsed();
+        let elasped1 = now.elapsed();
         println!(
             "⚡ Took {}{:.5}ms{}",
             "\x1b[33m",
-            elasped.as_secs_f64() * 1000.0,
+            elasped1.as_secs_f64() * 1000.0,
             "\x1b[0m"
         );
 
@@ -32,11 +32,18 @@ pub trait Solution {
 
         let now = Instant::now();
         println!("🎯 Part 2 -> {}{}{}", "\x1b[36m", self.part2(), "\x1b[0m");
-        let elasped = now.elapsed();
+        let elasped2 = now.elapsed();
         println!(
             "⚡ Took {}{:.5}ms{}",
             "\x1b[33m",
-            elasped.as_secs_f64() * 1000.0,
+            elasped2.as_secs_f64() * 1000.0,
+            "\x1b[0m"
+        );
+
+        println!(
+            "\n⚡ Took Total {}{:.5}ms{}",
+            "\x1b[33m",
+            (elasped1 + elasped2).as_secs_f64() * 1000.0,
             "\x1b[0m"
         );
 
