@@ -1,6 +1,7 @@
 pub mod day;
 pub mod day1;
 pub mod day2;
+pub mod day3;
 
 fn main() {
     println!();
@@ -10,29 +11,29 @@ fn main() {
         match i {
             1 => day1::run(),
             2 => day2::run(),
-            // 3 => day3::solve(),
-            // 4 => day4::solve(),
-            // 5 => day5::solve(),
-            // 6 => day6::solve(),
-            // 7 => day7::solve(),
-            // 8 => day8::solve(),
-            // 9 => day9::solve(),
-            // 10 => day10::solve(),
-            // 11 => day11::solve(),
-            // 12 => day12::solve(),
-            // 13 => day13::solve(),
-            // 14 => day14::solve(),
-            // 15 => day15::solve(),
-            // 16 => day16::solve(),
-            // 17 => day17::solve(),
-            // 18 => day18::solve(),
-            // 19 => day19::solve(),
-            // 20 => day20::solve(),
-            // 21 => day21::solve(),
-            // 22 => day22::solve(),
-            // 23 => day23::solve(),
-            // 24 => day24::solve(),
-            // 25 => day25::solve(),
+            3 => day3::run(),
+            // 4 => day4::run(),
+            // 5 => day5::run(),
+            // 6 => day6::run(),
+            // 7 => day7::run(),
+            // 8 => day8::run(),
+            // 9 => day9::run(),
+            // 10 => day10::run(),
+            // 11 => day11::run(),
+            // 12 => day12::run(),
+            // 13 => day13::run(),
+            // 14 => day14::run(),
+            // 15 => day15::run(),
+            // 16 => day16::run(),
+            // 17 => day17::run(),
+            // 18 => day18::run(),
+            // 19 => day19::run(),
+            // 20 => day20::run(),
+            // 21 => day21::run(),
+            // 22 => day22::run(),
+            // 23 => day23::run(),
+            // 24 => day24::run(),
+            // 25 => day25::run(),
             _ => {}
         }
     }
