@@ -2,7 +2,6 @@
 
 This year I will do all questions first in python, then c++, finally rust for sure.
 
-
 ### Benchmarks
 
 <details>
@@ -21,6 +20,9 @@ This year I will do all questions first in python, then c++, finally rust for su
 ./bin/day3
   Time (mean ± σ):       2.5 ms ±   0.3 ms    [User: 0.9 ms, System: 1.3 ms]
   Range (min … max):     2.0 ms …   5.2 ms    1002 runs
+./bin/day4
+  Time (mean ± σ):       5.1 ms ±   0.4 ms    [User: 3.4 ms, System: 1.4 ms]
+  Range (min … max):     4.4 ms …   7.0 ms    594 runs
 ```
 
 </details>
@@ -41,6 +43,10 @@ python day2.py
 python day3.py
   Time (mean ± σ):     123.6 ms ±   2.8 ms    [User: 56.3 ms, System: 67.6 ms]
   Range (min … max):   120.0 ms … 129.8 ms    24 runs
+
+python day4.py
+  Time (mean ± σ):     315.6 ms ±   3.7 ms    [User: 240.1 ms, System: 70.2 ms]
+  Range (min … max):   311.6 ms … 324.8 ms    10 runs
 ```
 
 </details>
@@ -51,32 +57,42 @@ python day3.py
 ```fish
 🎄 Day 1🎄
 🎯 Part 1 -> 2264607
-⚡ Took 0.24921ms
+⚡ Took 0.19217ms
 
 🎯 Part 2 -> 19457120
-⚡ Took 0.25425ms
+⚡ Took 0.17835ms
 
-⚡ Took Total 0.50346ms
+⚡ Took Total 0.37052ms
 ❄️  -------------------- ❄️
 
 🎄 Day 2🎄
 🎯 Part 1 -> 279
-⚡ Took 0.35266ms
+⚡ Took 0.29730ms
 
 🎯 Part 2 -> 343
-⚡ Took 0.86393ms
+⚡ Took 0.67139ms
 
-⚡ Took Total 1.21659ms
+⚡ Took Total 0.96869ms
 ❄️  -------------------- ❄️
 
 🎄 Day 3🎄
 🎯 Part 1 -> 187825547
-⚡ Took 1.31104ms
+⚡ Took 1.19724ms
 
 🎯 Part 2 -> 85508223
-⚡ Took 0.95377ms
+⚡ Took 0.95990ms
 
-⚡ Took Total 2.26480ms
+⚡ Took Total 2.15714ms
+❄️  -------------------- ❄️
+
+🎄 Day 4🎄
+🎯 Part 1 -> 2685
+⚡ Took 10.56872ms
+
+🎯 Part 2 -> 2048
+⚡ Took 3.29451ms
+
+⚡ Took Total 13.86324ms
 ❄️  -------------------- ❄️
 ```
 

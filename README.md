@@ -50,7 +50,7 @@ _Code repository was lost to time_
 - **Average Rank:** 47879 (Part 1) | 51210 (Part 2)
 - **Best Performance:** Day 2 (Rank 11443)
 
-### 2024 (Current) (⭐ 6)
+### 2024 (Current) (⭐ 8)
 
 - 🔨 Languages: Python, C++, Rust
 - 📁 [Source Code](2024/)
