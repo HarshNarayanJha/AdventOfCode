@@ -66,4 +66,47 @@ int part1() {
   return count;
 }
 
-int part2() { return 0; }
+int part2() {
+  string line;
+  ifstream input("../data/input4.txt");
+
+  vector<vector<char>> grid;
+
+  if (input.is_open()) {
+    while (getline(input, line)) {
+      vector<char> row(line.begin(), line.end());
+      grid.push_back(row);
+    }
+    input.close();
+  }
+
+  const int N = grid.size();
+
+  int count = 0;
+
+  for (int x = 0; x < N; x++) {
+    for (int y = 0; y < N; y++) {
+
+      if ((x + 2 < 0 || x + 2 >= N) || (y + 2 < 0 || y + 2 >= N))
+        continue;
+
+      if (grid[x + 1][y + 1] != 'A')
+        continue;
+
+      string word1;
+      string word2;
+
+      for (int n = 0; n < 3; n++) {
+        word1.push_back(grid[x + n][y + n]);
+        word2.push_back(grid[x + n][y + 2 - n]);
+      }
+
+      if ((word1 == "MAS" || word1 == "SAM") &&
+          (word2 == "MAS" || word2 == "SAM")) {
+        count++;
+      }
+    }
+  }
+
+  return count;
+}
