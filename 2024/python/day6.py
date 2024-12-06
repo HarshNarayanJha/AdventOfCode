@@ -51,7 +51,57 @@ def part1() -> int:
     return len(visited_locs)
 
 
-def part2() -> int: ...
+def part2() -> int:
+    maze = []
+    Point = namedtuple("Point", "x y")
+    start = Point(0, 0)
+    line_count = 0
+
+    with open("../data/input6.txt") as inp:
+        for line in inp.readlines():
+            line_count += 1
+            maze.append(list(line.strip()))
+            if "^" in line:
+                start = Point(line_count - 1, line.index("^"))
+
+    directions = (Point(-1, 0), Point(0, 1), Point(1, 0), Point(0, -1))
+    maze_height = len(maze)
+    maze_width = len(maze[0])
+    loop_obs = 0
+
+    for x, row in enumerate(maze):
+        for y, c in enumerate(row):
+            if c in "#^":
+                continue
+
+            maze[x][y] = "#"
+            visited_locs = set()
+            current = start
+            direction = 0
+            visited_locs.add((direction, start))
+
+            while True:
+                dx, dy = directions[direction]
+                next_point = Point(current.x + dx, current.y + dy)
+
+                if not (
+                    0 <= next_point.x < maze_height and 0 <= next_point.y < maze_width
+                ):
+                    break
+
+                if maze[next_point.x][next_point.y] == "#":
+                    direction = (direction + 1) % 4
+                else:
+                    current = next_point
+                    state = (direction, current)
+                    if state in visited_locs:
+                        loop_obs += 1
+                        break
+                    visited_locs.add(state)
+
+            maze[x][y] = "."
+
+    return loop_obs
 
 
 print(part1())
