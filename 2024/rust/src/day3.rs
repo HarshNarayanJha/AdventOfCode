@@ -12,7 +12,7 @@ impl Day3 {
 }
 
 impl Solution for Day3 {
-    fn part1(&self) -> u32 {
+    fn part1(&self) -> u64 {
         let input = include_str!("../../data/input3.txt");
         let instruction = input.lines().collect::<String>();
 
@@ -21,11 +21,11 @@ impl Solution for Day3 {
         mul_pat
             .captures_iter(&instruction)
             .map(|c| c.extract())
-            .map(|(_, [num1, num2])| num1.parse::<u32>().unwrap() * num2.parse::<u32>().unwrap())
+            .map(|(_, [num1, num2])| num1.parse::<u64>().unwrap() * num2.parse::<u64>().unwrap())
             .sum()
     }
 
-    fn part2(&self) -> u32 {
+    fn part2(&self) -> u64 {
         let input = include_str!("../../data/input3.txt");
         let instruction = input.lines().collect::<String>();
 
@@ -38,8 +38,8 @@ impl Solution for Day3 {
 
                 match captures.len() {
                     4 if enabled => {
-                        let num1 = captures[2].as_str().parse::<u32>().unwrap();
-                        let num2 = captures[3].as_str().parse::<u32>().unwrap();
+                        let num1 = captures[2].as_str().parse::<u64>().unwrap();
+                        let num2 = captures[3].as_str().parse::<u64>().unwrap();
                         (result + num1 * num2, enabled)
                     }
                     2 => (result, captures[0].as_str() == "do()"),
@@ -49,8 +49,8 @@ impl Solution for Day3 {
             .0
     }
 
-    fn get_day(&self) -> u32 {
-        self.day.day
+    fn get_day(&self) -> u8 {
+        self.day.day as u8
     }
 }
 

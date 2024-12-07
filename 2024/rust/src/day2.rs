@@ -31,8 +31,9 @@ impl Day2 {
     }
 }
 
+
 impl Solution for Day2 {
-    fn part1(&self) -> u32 {
+    fn part1(&self) -> u64 {
         let input = include_str!("../../data/input2.txt");
 
         let mut reports: Vec<Vec<u32>> = vec![];
@@ -54,7 +55,7 @@ impl Solution for Day2 {
         num_safe
     }
 
-    fn part2(&self) -> u32 {
+    fn part2(&self) -> u64 {
         let input = include_str!("../../data/input2.txt");
 
         let mut reports: Vec<Vec<u32>> = vec![];
@@ -90,8 +91,8 @@ impl Solution for Day2 {
         num_safe
     }
 
-    fn get_day(&self) -> u32 {
-        self.day.day
+    fn get_day(&self) -> u8 {
+        self.day.day as u8
     }
 }
 

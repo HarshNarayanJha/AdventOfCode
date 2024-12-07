@@ -13,31 +13,31 @@ impl Day5 {
 }
 
 impl Solution for Day5 {
-    fn part1(&self) -> u32 {
+    fn part1(&self) -> u64 {
         let input = include_str!("../../data/input5.txt");
 
-        let mut rules: HashMap<u32, Vec<u32>> = HashMap::new();
+        let mut rules: HashMap<u64, Vec<u64>> = HashMap::new();
         input
             .lines()
             .filter(|line| line.contains('|'))
             .for_each(|line| {
                 let parts: Vec<&str> = line.split('|').collect();
-                let bef: u32 = parts[0].parse().unwrap();
-                let after: u32 = parts[1].parse().unwrap();
+                let bef: u64 = parts[0].parse().unwrap();
+                let after: u64 = parts[1].parse().unwrap();
                 rules.entry(bef).or_insert_with(Vec::new).push(after);
             });
 
-        let orders: Vec<Vec<u32>> = input
+        let orders: Vec<Vec<u64>> = input
             .lines()
             .filter(|line| line.contains(','))
             .map(|line| {
                 line.split(',')
-                    .map(|page| page.parse::<u32>().unwrap())
+                    .map(|page| page.parse::<u64>().unwrap())
                     .collect()
             })
             .collect();
 
-        let mut valids: Vec<u32> = vec![];
+        let mut valids: Vec<u64> = vec![];
 
         for (o, order) in orders.iter().enumerate() {
             let mut correct_so_far = true;
@@ -54,7 +54,7 @@ impl Solution for Day5 {
             }
 
             if correct_so_far {
-                valids.push(o as u32);
+                valids.push(o as u64);
             }
         }
 
@@ -64,31 +64,31 @@ impl Solution for Day5 {
             .sum()
     }
 
-    fn part2(&self) -> u32 {
+    fn part2(&self) -> u64 {
         let input = include_str!("../../data/input5.txt");
 
-        let mut rules: HashMap<u32, Vec<u32>> = HashMap::new();
+        let mut rules: HashMap<u64, Vec<u64>> = HashMap::new();
         input
             .lines()
             .filter(|line| line.contains('|'))
             .for_each(|line| {
                 let parts: Vec<&str> = line.split('|').collect();
-                let bef: u32 = parts[0].parse().unwrap();
-                let after: u32 = parts[1].parse().unwrap();
+                let bef: u64 = parts[0].parse().unwrap();
+                let after: u64 = parts[1].parse().unwrap();
                 rules.entry(bef).or_insert_with(Vec::new).push(after);
             });
 
-        let mut orders: Vec<Vec<u32>> = input
+        let mut orders: Vec<Vec<u64>> = input
             .lines()
             .filter(|line| line.contains(','))
             .map(|line| {
                 line.split(',')
-                    .map(|page| page.parse::<u32>().unwrap())
+                    .map(|page| page.parse::<u64>().unwrap())
                     .collect()
             })
             .collect();
 
-        let mut invalids: Vec<u32> = vec![];
+        let mut invalids: Vec<u64> = vec![];
 
         for (o, order) in orders.iter().enumerate() {
             let mut correct_so_far = true;
@@ -105,7 +105,7 @@ impl Solution for Day5 {
             }
 
             if !correct_so_far {
-                invalids.push(o as u32);
+                invalids.push(o as u64);
             }
         }
 
@@ -130,7 +130,7 @@ impl Solution for Day5 {
             .sum()
     }
 
-    fn get_day(&self) -> u32 {
+    fn get_day(&self) -> u8 {
         self.day.day
     }
 }

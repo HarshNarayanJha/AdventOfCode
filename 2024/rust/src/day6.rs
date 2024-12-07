@@ -11,7 +11,7 @@ impl Day6 {
 }
 
 impl Solution for Day6 {
-    fn part1(&self) -> u32 {
+    fn part1(&self) -> u64 {
         let input = include_str!("../../data/input6.txt");
 
         let mut start = (0, 0);
@@ -46,10 +46,10 @@ impl Solution for Day6 {
             }
         }
 
-        visited.len() as u32
+        visited.len() as u64
     }
 
-    fn part2(&self) -> u32 {
+    fn part2(&self) -> u64 {
         let input = include_str!("../../data/input6.txt");
 
         let mut start = (0, 0);
@@ -109,7 +109,7 @@ impl Solution for Day6 {
         loop_walls
     }
 
-    fn get_day(&self) -> u32 {
+    fn get_day(&self) -> u8 {
         self.day.day
     }
 }

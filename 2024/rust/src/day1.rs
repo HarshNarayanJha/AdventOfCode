@@ -13,7 +13,7 @@ impl Day1 {
 }
 
 impl Solution for Day1 {
-    fn part1(&self) -> u32 {
+    fn part1(&self) -> u64 {
         let input = include_str!("../../data/input1.txt");
 
         let mut list1: Vec<u32> = vec![];
@@ -35,10 +35,10 @@ impl Solution for Day1 {
             dist_sum += j.abs_diff(k);
         }
 
-        dist_sum
+        dist_sum as u64
     }
 
-    fn part2(&self) -> u32 {
+    fn part2(&self) -> u64 {
         let input = include_str!("../../data/input1.txt");
 
         let mut list1: Vec<u32> = vec![];
@@ -66,10 +66,10 @@ impl Solution for Day1 {
             }
         }
 
-        sim_score
+        sim_score as u64
     }
 
-    fn get_day(&self) -> u32 {
+    fn get_day(&self) -> u8 {
         self.day.day
     }
 }

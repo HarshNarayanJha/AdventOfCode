@@ -13,7 +13,7 @@ impl Day4 {
 }
 
 impl Solution for Day4 {
-    fn part1(&self) -> u32 {
+    fn part1(&self) -> u64 {
         let input = include_str!("../../data/input4.txt");
         let grid: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
 
@@ -53,7 +53,7 @@ impl Solution for Day4 {
         count
     }
 
-    fn part2(&self) -> u32 {
+    fn part2(&self) -> u64 {
         let input = include_str!("../../data/input4.txt");
         let grid: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
 
@@ -93,7 +93,7 @@ impl Solution for Day4 {
         count
     }
 
-    fn get_day(&self) -> u32 {
+    fn get_day(&self) -> u8 {
         self.day.day
     }
 }

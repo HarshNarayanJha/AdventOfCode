@@ -1,3 +1,4 @@
+import math
 from itertools import product
 
 
@@ -8,15 +9,12 @@ def part1() -> int:
         for line in lines:
             res, values = line.split(":")
             equations[int(res)] = tuple(map(int, values.split()))
-
     operators = ["+", "*"]
-
     true_sum = 0
 
     for res in equations:
         vals = equations[res]
         found = False
-
         for ops_combo in product(operators, repeat=len(vals) - 1):
             curr = vals[0]
             for i, op in enumerate(ops_combo):
@@ -24,11 +22,9 @@ def part1() -> int:
                     curr = curr + vals[i + 1]
                 elif op == "*":
                     curr = curr * vals[i + 1]
-
             if curr == res:
                 found = True
                 break
-
         if found:
             true_sum += res
 
@@ -44,13 +40,11 @@ def part2() -> int:
             equations[int(res)] = tuple(map(int, values.split()))
 
     operators = ["+", "*", "||"]
-
     true_sum = 0
 
     for res in equations:
         vals = equations[res]
         found = False
-
         for ops_combo in product(operators, repeat=len(vals) - 1):
             curr = vals[0]
             for i, op in enumerate(ops_combo):
@@ -59,12 +53,10 @@ def part2() -> int:
                 elif op == "*":
                     curr = curr * vals[i + 1]
                 elif op == "||":
-                    curr = int(str(curr) + str(vals[i + 1]))
-
+                    curr = curr * (10 ** math.ceil(math.log10(vals[i + 1]) + 1)) + vals[i + 1]
             if curr == res:
                 found = True
                 break
-
         if found:
             true_sum += res
 

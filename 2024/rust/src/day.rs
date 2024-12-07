@@ -1,19 +1,19 @@
 use std::time::Instant;
 
 pub struct Day {
-    pub day: u32,
+    pub day: u8,
 }
 
 impl Day {
-    pub fn new(day: u32) -> Self {
+    pub fn new(day: u8) -> Self {
         Self { day }
     }
 }
 
 pub trait Solution {
-    fn part1(&self) -> u32;
-    fn part2(&self) -> u32;
-    fn get_day(&self) -> u32;
+    fn part1(&self) -> u64;
+    fn part2(&self) -> u64;
+    fn get_day(&self) -> u8;
 
     fn solve(&self) {
         println!("\n🎄 {}Day {}🎄", "\x1b[32m", self.get_day());
