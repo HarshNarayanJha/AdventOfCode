@@ -19,58 +19,49 @@ impl Solution for Day7 {
         let equations: HashMap<u64, Vec<u64>> = input
             .lines()
             .map(|line| {
-                let split = line.split(':').collect::<Vec<&str>>();
+                let (result, values) = line.split_once(':').unwrap();
                 (
-                    split[0].parse::<u64>().unwrap(),
-                    split[1]
+                    result.parse().unwrap(),
+                    values
                         .split_whitespace()
-                        .map(|x| x.parse::<u64>().unwrap())
-                        .collect::<Vec<u64>>(),
+                        .filter_map(|x| x.parse().ok())
+                        .collect(),
                 )
             })
             .collect();
 
-        let operators = vec!['+', '*'];
-        let mut true_sum = 0;
+        let operators = ['+', '*'];
 
-        for (result, values) in equations {
-            let count = values.len() - 1;
-            let mut found = false;
+        equations
+            .into_iter()
+            .filter(|&(result, ref values)| {
+                let count = values.len() - 1;
+                let op_combinations = (0..count).fold(vec![vec![]], |acc, _| {
+                    acc.into_iter()
+                        .flat_map(|combination| {
+                            operators.iter().map(move |&op| {
+                                let mut new_combination = combination.clone();
+                                new_combination.push(op);
+                                new_combination
+                            })
+                        })
+                        .collect()
+                });
 
-            let op_combs = (0..count).fold(vec![vec![]], |acc, _| {
-                let mut new_comb = Vec::new();
-                for combination in acc {
-                    for &operator in &operators {
-                        let mut new_combination = combination.clone();
-                        new_combination.push(operator);
-                        new_comb.push(new_combination);
-                    }
-                }
-                new_comb
-            });
-
-            for op_combo in op_combs {
-                let mut curr = values[0];
-                for (i, op) in op_combo.iter().enumerate() {
-                    if op == &'+' {
-                        curr += values[i + 1]
-                    } else if op == &'*' {
-                        curr *= values[i + 1]
-                    }
-                }
-
-                if curr == result {
-                    found = true;
-                    break;
-                }
-            }
-
-            if found {
-                true_sum += result;
-            }
-        }
-
-        true_sum
+                op_combinations.into_iter().any(|ops| {
+                    let value = ops
+                        .iter()
+                        .enumerate()
+                        .fold(values[0], |acc, (i, &op)| match op {
+                            '+' => acc + values[i + 1],
+                            '*' => acc * values[i + 1],
+                            _ => unreachable!(),
+                        });
+                    value == result
+                })
+            })
+            .map(|(result, _)| result)
+            .sum()
     }
 
     fn part2(&self) -> u64 {
@@ -79,60 +70,51 @@ impl Solution for Day7 {
         let equations: HashMap<u64, Vec<u64>> = input
             .lines()
             .map(|line| {
-                let split = line.split(':').collect::<Vec<&str>>();
+                let (result, values) = line.split_once(':').unwrap();
                 (
-                    split[0].parse::<u64>().unwrap(),
-                    split[1]
+                    result.parse().unwrap(),
+                    values
                         .split_whitespace()
-                        .map(|x| x.parse::<u64>().unwrap())
-                        .collect::<Vec<u64>>(),
+                        .filter_map(|x| x.parse().ok())
+                        .collect(),
                 )
             })
             .collect();
 
-        let operators = vec!['+', '*', '|'];
-        let mut true_sum = 0;
+        let operators = ['+', '*', '|'];
 
-        for (result, values) in equations {
-            let count = values.len() - 1;
-            let mut found = false;
+        equations
+            .into_iter()
+            .filter(|&(result, ref values)| {
+                let count = values.len() - 1;
 
-            let op_combs = (0..count).fold(vec![vec![]], |acc, _| {
-                let mut new_comb = Vec::new();
-                for combination in acc {
-                    for &operator in &operators {
-                        let mut new_combination = combination.clone();
-                        new_combination.push(operator);
-                        new_comb.push(new_combination);
+                let op_combs = (0..count).fold(vec![vec![]], |acc, _| {
+                    let mut new_comb = Vec::new();
+                    for combination in acc {
+                        for &operator in &operators {
+                            let mut new_combination = combination.clone();
+                            new_combination.push(operator);
+                            new_comb.push(new_combination);
+                        }
                     }
-                }
-                new_comb
-            });
+                    new_comb
+                });
 
-            for op_combo in op_combs {
-                let mut curr = values[0];
-                for (i, op) in op_combo.iter().enumerate() {
-                    if op == &'+' {
-                        curr += values[i + 1]
-                    } else if op == &'*' {
-                        curr *= values[i + 1]
-                    } else if op == &'|' {
-                        curr = curr * (10_u64.pow(values[i + 1].ilog10() + 1)) + values[i + 1]
-                    }
-                }
-
-                if curr == result {
-                    found = true;
-                    break;
-                }
-            }
-
-            if found {
-                true_sum += result;
-            }
-        }
-
-        true_sum
+                op_combs.into_iter().any(|ops| {
+                    let value = ops
+                        .iter()
+                        .enumerate()
+                        .fold(values[0], |acc, (i, &op)| match op {
+                            '+' => acc + values[i + 1],
+                            '*' => acc * values[i + 1],
+                            '|' => acc * (10_u64.pow(values[i + 1].ilog10() + 1)) + values[i + 1],
+                            _ => unreachable!(),
+                        });
+                    value == result
+                })
+            })
+            .map(|(result, _)| result)
+            .sum()
     }
 
     fn get_day(&self) -> u8 {
