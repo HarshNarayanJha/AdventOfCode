@@ -14,13 +14,13 @@ impl Solution for Day6 {
     fn part1(&self) -> u32 {
         let input = include_str!("../../data/input6.txt");
 
-        let mut start: (i32, i32) = (0, 0);
+        let mut start = (0, 0);
         let maze: Vec<Vec<char>> = input
             .lines()
             .enumerate()
             .map(|(i, line)| {
-                if line.contains('^') {
-                    start = (i as i32, line.find('^').unwrap() as i32);
+                if let Some(y) = line.find('^') {
+                    start = (i as i32, y as i32);
                 }
                 line.chars().collect()
             })
@@ -28,8 +28,7 @@ impl Solution for Day6 {
 
         let (mut dx, mut dy) = (-1, 0);
         let mut current = start;
-        let mut visited: Vec<(i32, i32)> = vec![];
-        visited.push(current);
+        let mut visited = vec![current];
 
         loop {
             let (tx, ty) = (current.0 + dx, current.1 + dy);
@@ -53,13 +52,13 @@ impl Solution for Day6 {
     fn part2(&self) -> u32 {
         let input = include_str!("../../data/input6.txt");
 
-        let mut start: (i32, i32) = (0, 0);
+        let mut start = (0, 0);
         let maze: Vec<Vec<char>> = input
             .lines()
             .enumerate()
             .map(|(i, line)| {
-                if line.contains('^') {
-                    start = (i as i32, line.find('^').unwrap() as i32);
+                if let Some(y) = line.find('^') {
+                    start = (i as i32, y as i32);
                 }
                 line.chars().collect()
             })

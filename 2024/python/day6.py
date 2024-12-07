@@ -17,15 +17,20 @@ def part1() -> int:
     visited_locs: set[Point] = set()
     visited_locs.add(start)
 
-    obstacles: set[Point] = set()
+    maze_height = len(maze)
+    maze_width = len(maze[0])
 
-    for x, row in enumerate(maze):
-        for y, c in enumerate(row):
-            if c == "#":
-                obstacles.add(Point(x, y))
+    obstacles: set[Point] = set(
+        [
+            Point(x, y)
+            for x in range(maze_height)
+            for y in range(maze_width)
+            if maze[x][y] == "#"
+        ]
+    )
 
     current = start
-    directions = [Point(-1, 0), Point(0, 1), Point(1, 0), Point(0, -1)]
+    directions = (Point(-1, 0), Point(0, 1), Point(1, 0), Point(0, -1))
     direction = 0
 
     while True:
@@ -105,4 +110,4 @@ def part2() -> int:
 
 
 print(part1())
-print(part2())
+# print(part2())
