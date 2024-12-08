@@ -48,7 +48,6 @@ def part1() -> int:
             if node_in_bound(a2, H, W):
                 antinodes_at.add(a2)
 
-    print(antinodes_at)
     return len(antinodes_at)
 
 
