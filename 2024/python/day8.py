@@ -7,8 +7,8 @@ def get_two_antinodes(p1, p2):
     x2, y2 = p2
     dx = x2 - x1
     dy = y2 - y1
-    a1 = (round(x1 - dx), round(y1 - dy))
-    a2 = (round(x2 + dx), round(y2 + dy))
+    a1 = (x1 - dx), (y1 - dy)
+    a2 = (x2 + dx), (y2 + dy)
     return a1, a2
 
 
@@ -21,8 +21,8 @@ def part1() -> int:
     with open("../data/input8.txt") as inp:
         grid = [list(line.strip()) for line in inp.readlines()]
 
-    W = len(grid)
-    H = len(grid[0])
+    H = len(grid)
+    W = len(grid[0])
 
     antennas = defaultdict(list)
     for i in range(H):
@@ -43,11 +43,12 @@ def part1() -> int:
             visited_pairs.add((a, b))
 
             a1, a2 = get_two_antinodes(a, b)
-            if node_in_bound(a1, len(grid), len(grid[0])):
+            if node_in_bound(a1, H, W):
                 antinodes_at.add(a1)
-            if node_in_bound(a2, len(grid), len(grid[0])):
+            if node_in_bound(a2, H, W):
                 antinodes_at.add(a2)
 
+    print(antinodes_at)
     return len(antinodes_at)
 
 
@@ -56,8 +57,8 @@ def part2() -> int:
     with open("../data/input8.txt") as inp:
         grid = [list(line.strip()) for line in inp.readlines()]
 
-    W = len(grid)
-    H = len(grid[0])
+    H = len(grid)
+    W = len(grid[0])
 
     antennas = defaultdict(list)
     for i in range(H):
@@ -96,6 +97,7 @@ def part2() -> int:
                 if node_in_bound(b, H, W):
                     antinodes_at.add(b)
 
+                # propagate forwards
                 new_a1, _ = get_two_antinodes(a1, a)
                 a = a1
                 a1 = new_a1

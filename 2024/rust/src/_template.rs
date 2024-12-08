@@ -11,19 +11,19 @@ impl DayN {
 }
 
 impl Solution for DayN {
-    fn part1(&self) -> u32 {
+    fn part1(&self) -> u64 {
         let input = include_str!("../../data/inputN.txt");
 
         0
     }
 
-    fn part2(&self) -> u32 {
+    fn part2(&self) -> u64 {
         let input = include_str!("../../data/inputN.txt");
 
         0
     }
 
-    fn get_day(&self) -> u32 {
+    fn get_day(&self) -> u8 {
         self.day.day
     }
 }
