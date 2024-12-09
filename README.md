@@ -50,7 +50,7 @@ _Code repository was lost to time_
 - **Average Rank:** 47879 (Part 1) | 51210 (Part 2)
 - **Best Performance:** Day 2 (Rank 11443)
 
-### 2024 (Current) (⭐ 16)
+### 2024 (Current) (⭐ 18)
 
 - 🔨 Languages: Python, C++, Rust
 - 📁 [Source Code](2024/)
@@ -59,6 +59,7 @@ _Code repository was lost to time_
 
 | Day | Part 1   | Part 1 Rank | Part 2   | Part 2 Rank | Stars |
 | --- | -------- | ----------: | -------- | ----------: | :---: |
+| 9   | 00:51:40 |        6409 | 01:36:18 |        4689 | ⭐⭐  |
 | 8   | 00:32:34 |        4517 | 00:53:20 |        5119 | ⭐⭐  |
 | 7   | 00:10:00 |        1461 | 00:13:08 |        1172 | ⭐⭐  |
 | 6   | 01:01:47 |       10122 | 01:37:05 |        6219 | ⭐⭐  |
@@ -68,5 +69,5 @@ _Code repository was lost to time_
 | 2   | 00:13:09 |        4247 | 00:35:51 |        5529 | ⭐⭐  |
 | 1   | 09:31:55 |       51925 | 09:35:04 |       48006 | ⭐⭐  |
 
-- **Average Rank:** 12616 (Part 1) | 11576 (Part 2)
+- **Average Rank:** 11926 (Part 1) | 10811 (Part 2)
 - **Best Performance:** Day 7 (Rank 1461)
