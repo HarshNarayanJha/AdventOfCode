@@ -15,22 +15,27 @@ def part1() -> int:
         i = (i + 1) % 2
 
     # now defragment it
-    for b in range(len(fs)):
+    N = len(fs)
+    count_files = N - fs.count(-1)
+    checksum = 0
+    last_checked = N
+
+    for b in range(N):
+        if b == count_files:
+            break
+
         if fs[b] == -1:
-            idx = -1
+            idx = last_checked - 1
             while fs[idx] == -1:
                 idx -= 1
 
-            if len(fs) + idx == b - 1:
-                break
+            checksum += b * fs[idx]
 
-            fs[b], fs[idx] = fs[idx], fs[b]
+            last_checked = idx
         else:
-            pass
+            checksum += b * fs[b]
 
-    res = sum([i * b for i, b in enumerate(fs[: fs.index(-1)])])
-
-    return res
+    return checksum
 
 
 def part2() -> int:
