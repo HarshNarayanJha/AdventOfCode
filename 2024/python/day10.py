@@ -60,11 +60,9 @@ def part2() -> int:
     directions = {(0, 1), (1, 0), (0, -1), (-1, 0)}
 
     for trailhead in trailheads:
-        stack: list[tuple[tuple[int, int], list[tuple[int, int]]]] = [
-            (trailhead, [trailhead])
-        ]
+        stack: list[tuple[int, int]] = [trailhead]
         while stack:
-            pt, path = stack.pop()
+            pt = stack.pop()
             x, y = pt
             if pt in tops:
                 trailheads[trailhead] += 1
@@ -76,7 +74,7 @@ def part2() -> int:
                     and 0 <= new_y < W
                     and grid[new_x][new_y] == grid[x][y] + 1
                 ):
-                    stack.append(((new_x, new_y), path + [(new_x, new_y)]))
+                    stack.append((new_x, new_y))
 
     rating = sum(trailheads.values())
 

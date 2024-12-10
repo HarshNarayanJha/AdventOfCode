@@ -22,8 +22,7 @@ int part1() {
 
   if (input.is_open()) {
     while (getline(input, line)) {
-      vector<char> chars(line.begin(), line.end());
-      grid.push_back(chars);
+      grid.emplace_back(line.begin(), line.end());
     }
     input.close();
   }
@@ -82,8 +81,7 @@ int part2() {
 
   if (input.is_open()) {
     while (getline(input, line)) {
-      vector<char> chars(line.begin(), line.end());
-      grid.push_back(chars);
+      grid.emplace_back(line.begin(), line.end());
     }
     input.close();
   }

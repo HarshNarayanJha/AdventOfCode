@@ -36,6 +36,9 @@ This year I will do all questions first in python, then c++, finally rust for su
 ./bin/day9
   Time (mean ± σ):     214.8 ms ±   8.8 ms    [User: 207.4 ms, System: 3.2 ms]
   Range (min … max):   203.2 ms … 231.3 ms    14 runs
+./bin/day10
+  Time (mean ± σ):       3.7 ms ±   0.4 ms    [User: 2.2 ms, System: 1.2 ms]
+  Range (min … max):     2.9 ms …   5.9 ms    788 runs
 ```
 
 </details>
@@ -72,6 +75,9 @@ python day8.py
 python day9.py
   Time (mean ± σ):     21.105 s ±  0.323 s    [User: 20.673 s, System: 0.077 s]
   Range (min … max):   20.877 s … 21.333 s    2 runs
+python day10.py
+  Time (mean ± σ):     125.9 ms ±   4.0 ms    [User: 62.0 ms, System: 63.5 ms]
+  Range (min … max):   120.3 ms … 137.2 ms    22 runs
 ```
 
 </details>
@@ -168,6 +174,16 @@ python day9.py
 ⚡ Took 250.01418ms
 
 ⚡ Took Total 252.61157ms
+❄️  -------------------- ❄️
+
+🎄 Day 10🎄
+🎯 Part 1 -> 820
+⚡ Took 0.78264ms
+
+🎯 Part 2 -> 1786
+⚡ Took 0.67895ms
+
+⚡ Took Total 1.46159ms
 ❄️  -------------------- ❄️
 ```
 
