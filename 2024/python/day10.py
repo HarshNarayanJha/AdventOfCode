@@ -1,60 +1,40 @@
-from collections import namedtuple
-
-
-class Point(namedtuple("Point", "x y", defaults=[0, 0])):
-    def __add__(self, other):
-        return Point(self.x + other.x, self.y + other.y)
-
-
-UP = Point(-1, 0)
-DOWN = Point(1, 0)
-LEFT = Point(0, -1)
-RIGHT = Point(0, 1)
-
-
-def get_valid_neighbours(pt: Point, H: int, W: int) -> tuple[Point | None, ...]:
-    neighbours = []
-    for direction in (UP, DOWN, LEFT, RIGHT):
-        new_pt = pt + direction
-        neighbours.append(new_pt if 0 <= new_pt.x < H and 0 <= new_pt.y < W else None)
-    return tuple(neighbours)
-
-
 def part1() -> int:
     grid = None
 
     with open("../data/input10.txt", "r") as inp:
         grid = [list(map(int, line.strip())) for line in inp.readlines()]
 
-    trailheads: dict[Point, int] = {
-        Point(i, j): 0
-        for i, row in enumerate(grid)
-        for j, c in enumerate(row)
-        if c == 0
-    }
-    tops: list[Point] = [
-        Point(i, j) for i, row in enumerate(grid) for j, c in enumerate(row) if c == 9
-    ]
-
     H = len(grid)
     W = len(grid[0])
+
+    trailheads: dict[tuple[int, int], int] = {
+        (i, j): 0 for i in range(H) for j in range(W) if grid[i][j] == 0
+    }
+    tops: set[tuple[int, int]] = {
+        (i, j) for i in range(H) for j in range(W) if grid[i][j] == 9
+    }
+
+    directions = {(0, 1), (1, 0), (0, -1), (-1, 0)}
 
     for trailhead in trailheads:
         tops_visited = set()
 
-        queue: list[Point] = []
-        queue.append(trailhead)
-        while queue:
-            pt = queue.pop()
+        stack: list[tuple[int, int]] = [trailhead]
+        while stack:
+            pt = stack.pop()
+            x, y = pt
             if pt in tops and pt not in tops_visited:
                 trailheads[trailhead] += 1
                 tops_visited.add(pt)
-            dirs = get_valid_neighbours(pt, H, W)
-            for dir in dirs:
-                if not dir:
-                    continue
-                if grid[dir.x][dir.y] == grid[pt.x][pt.y] + 1:
-                    queue.append(dir)
+
+            for dx, dy in directions:
+                new_x, new_y = x + dx, y + dy
+                if (
+                    0 <= new_x < H
+                    and 0 <= new_y < W
+                    and grid[new_x][new_y] == grid[x][y] + 1
+                ):
+                    stack.append((new_x, new_y))
 
     score = sum(trailheads.values())
 
@@ -67,38 +47,38 @@ def part2() -> int:
     with open("../data/input10.txt", "r") as inp:
         grid = [list(map(int, line.strip())) for line in inp.readlines()]
 
-    trailheads: dict[Point, int] = {}
-    tops: list[Point] = []
-
     H = len(grid)
     W = len(grid[0])
 
-    for i, row in enumerate(grid):
-        for j, c in enumerate(row):
-            if c == 0:
-                trailheads[Point(i, j)] = 0
-            elif c == 9:
-                tops.append(Point(i, j))
+    trailheads: dict[tuple[int, int], int] = {
+        (i, j): 0 for i in range(H) for j in range(W) if grid[i][j] == 0
+    }
+    tops: set[tuple[int, int]] = {
+        (i, j) for i in range(H) for j in range(W) if grid[i][j] == 9
+    }
+
+    directions = {(0, 1), (1, 0), (0, -1), (-1, 0)}
 
     for trailhead in trailheads:
-        # start the search
-        queue: list[tuple[Point, list[Point]]] = []
-        queue.append((trailhead, [trailhead]))
-
-        while queue:
-            pt, path = queue.pop(0)
-
+        stack: list[tuple[tuple[int, int], list[tuple[int, int]]]] = [
+            (trailhead, [trailhead])
+        ]
+        while stack:
+            pt, path = stack.pop()
+            x, y = pt
             if pt in tops:
                 trailheads[trailhead] += 1
 
-            dirs = get_valid_neighbours(pt, H, W)
+            for dx, dy in directions:
+                new_x, new_y = (x + dx, y + dy)
+                if (
+                    0 <= new_x < H
+                    and 0 <= new_y < W
+                    and grid[new_x][new_y] == grid[x][y] + 1
+                ):
+                    stack.append(((new_x, new_y), path + [(new_x, new_y)]))
 
-            for dir in dirs:
-                if dir:
-                    if grid[dir.x][dir.y] - grid[pt.x][pt.y] == 1 and dir not in path:
-                        queue.append((dir, path[:] + [dir]))
-
-    rating = sum([trailheads[t] for t in trailheads])
+    rating = sum(trailheads.values())
 
     return rating
 
