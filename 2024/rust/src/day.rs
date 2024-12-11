@@ -19,8 +19,9 @@ pub trait Solution {
         println!("\n🎄 {}Day {}🎄", "\x1b[32m", self.get_day());
 
         let now = Instant::now();
-        println!("🎯 Part 1 -> {}{}{}", "\x1b[36m", self.part1(), "\x1b[0m");
+        let p1 = self.part1();
         let elasped1 = now.elapsed();
+        println!("🎯 Part 1 -> {}{}{}", "\x1b[36m", p1, "\x1b[0m");
         println!(
             "⚡ Took {}{:.5}ms{}",
             "\x1b[33m",
@@ -31,8 +32,9 @@ pub trait Solution {
         println!();
 
         let now = Instant::now();
-        println!("🎯 Part 2 -> {}{}{}", "\x1b[36m", self.part2(), "\x1b[0m");
+        let p2 = self.part2();
         let elasped2 = now.elapsed();
+        println!("🎯 Part 2 -> {}{}{}", "\x1b[36m", p2, "\x1b[0m");
         println!(
             "⚡ Took {}{:.5}ms{}",
             "\x1b[33m",

@@ -9,6 +9,7 @@ pub mod day7;
 pub mod day8;
 pub mod day9;
 pub mod day10;
+pub mod day11;
 
 fn main() {
     println!();
@@ -25,8 +26,8 @@ fn main() {
             // 7 => day7::run(),
             // 8 => day8::run(),
             // 9 => day9::run(),
-            10 => day10::run(),
-            // 11 => day11::run(),
+            // 10 => day10::run(),
+            11 => day11::run(),
             // 12 => day12::run(),
             // 13 => day13::run(),
             // 14 => day14::run(),
