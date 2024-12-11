@@ -36,8 +36,13 @@ impl Solution for Day11 {
                 if num == 0 {
                     continue;
                 }
-                let s = num.to_string();
-                let len = s.len();
+
+                let mut n = num;
+                let mut len = 1;
+                while n >= 10 {
+                    n /= 10;
+                    len += 1;
+                }
 
                 if len % 2 == 1 {
                     new_counts
@@ -45,21 +50,10 @@ impl Solution for Day11 {
                         .and_modify(|x| *x += count)
                         .or_insert(count);
                 } else {
-                    let mid = len / 2;
-                    let left = s
-                        .chars()
-                        .into_iter()
-                        .take(mid)
-                        .collect::<String>()
-                        .parse::<u64>()
-                        .unwrap();
-                    let right = s
-                        .chars()
-                        .into_iter()
-                        .skip(mid)
-                        .collect::<String>()
-                        .parse::<u64>()
-                        .unwrap();
+                    let divisor = 10u64.pow((len / 2) as u32);
+                    let right = num % divisor;
+                    let left = num / divisor;
+
                     new_counts
                         .entry(left)
                         .and_modify(|x| *x += count)
@@ -86,49 +80,46 @@ impl Solution for Day11 {
 
         let blinks = 75;
         let mut counts: HashMap<u64, u64> = HashMap::new();
+        counts.reserve(line.len());
         for k in line {
             counts.entry(k).and_modify(|e| *e += 1).or_insert(1);
         }
 
         for _ in 0..blinks {
             let mut new_counts: HashMap<u64, u64> = HashMap::new();
+            new_counts.reserve(counts.len() * 2);
             new_counts.entry(1).or_insert(*counts.get(&0).unwrap_or(&0));
 
             for (&num, &count) in counts.iter() {
-                if num != 0 {
-                    let s = num.to_string();
-                    let len = s.len();
+                if num == 0 {
+                    continue;
+                }
 
-                    if len % 2 == 1 {
-                        new_counts
-                            .entry(2024 * num)
-                            .and_modify(|x| *x += count)
-                            .or_insert(count);
-                    } else {
-                        let mid = len / 2;
-                        let left = s
-                            .chars()
-                            .into_iter()
-                            .take(mid)
-                            .collect::<String>()
-                            .parse::<u64>()
-                            .unwrap();
-                        let right = s
-                            .chars()
-                            .into_iter()
-                            .skip(mid)
-                            .collect::<String>()
-                            .parse::<u64>()
-                            .unwrap();
-                        new_counts
-                            .entry(left)
-                            .and_modify(|x| *x += count)
-                            .or_insert(count);
-                        new_counts
-                            .entry(right)
-                            .and_modify(|x| *x += count)
-                            .or_insert(count);
-                    }
+                let mut n = num;
+                let mut len = 1;
+                while n >= 10 {
+                    n /= 10;
+                    len += 1;
+                }
+
+                if len % 2 == 1 {
+                    new_counts
+                        .entry(2024 * num)
+                        .and_modify(|x| *x += count)
+                        .or_insert(count);
+                } else {
+                    let divisor = 10u64.pow((len / 2) as u32);
+                    let right = num % divisor;
+                    let left = num / divisor;
+
+                    new_counts
+                        .entry(left)
+                        .and_modify(|x| *x += count)
+                        .or_insert(count);
+                    new_counts
+                        .entry(right)
+                        .and_modify(|x| *x += count)
+                        .or_insert(count);
                 }
             }
 
