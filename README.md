@@ -59,6 +59,7 @@ _Code repository was lost to time_
 
 | Day | Part 1   | Part 1 Rank | Part 2   | Part 2 Rank | Stars |
 | --- | -------- | ----------: | -------- | ----------: | :---: |
+| 11  | 00:06:44 |        1104 | 00:20:40 |        1416 | ⭐⭐  |
 | 10  | 00:22:40 |        3539 | 00:39:40 |        5061 | ⭐⭐  |
 | 9   | 00:51:40 |        6409 | 01:36:18 |        4689 | ⭐⭐  |
 | 8   | 00:32:34 |        4517 | 00:53:20 |        5119 | ⭐⭐  |
@@ -70,5 +71,5 @@ _Code repository was lost to time_
 | 2   | 00:13:09 |        4247 | 00:35:51 |        5529 | ⭐⭐  |
 | 1   | 09:31:55 |       51925 | 09:35:04 |       48006 | ⭐⭐  |
 
-- **Average Rank:** 11088 (Part 1) | 10236 (Part 2)
-- **Best Performance:** Day 7 (Rank 1461)
+- **Average Rank:** 10180 (Part 1) | 9434 (Part 2)
+- **Best Performance:** Day 11 (Rank 1104, Part 1) | Day 7 (Rank 1172, Part 2)
