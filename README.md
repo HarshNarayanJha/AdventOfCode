@@ -2,7 +2,7 @@
 
 My Solutions for the Advent Of Code arranged yearwise in all possible languages.
 
-Total Stars Collected: 39 ⭐
+Total Stars Collected: 59 ⭐
 
 ### 2022 (⭐ 17)
 
@@ -50,7 +50,7 @@ _Code repository was lost to time_
 - **Average Rank:** 47879 (Part 1) | 51210 (Part 2)
 - **Best Performance:** Day 2 (Rank 11443)
 
-### 2024 (Current) (⭐ 22)
+### 2024 (Current) (⭐ 24)
 
 - 🔨 Languages: Python, C++, Rust
 - 📁 [Source Code](2024/)
@@ -59,6 +59,7 @@ _Code repository was lost to time_
 
 | Day | Part 1   | Part 1 Rank | Part 2   | Part 2 Rank | Stars |
 | --- | -------- | ----------: | -------- | ----------: | :---: |
+| 12  | 00:26:00 |        2902 | 02:31:03 |        5162 | ⭐⭐  |
 | 11  | 00:06:44 |        1104 | 00:20:40 |        1416 | ⭐⭐  |
 | 10  | 00:22:40 |        3539 | 00:39:40 |        5061 | ⭐⭐  |
 | 9   | 00:51:40 |        6409 | 01:36:18 |        4689 | ⭐⭐  |
@@ -71,5 +72,5 @@ _Code repository was lost to time_
 | 2   | 00:13:09 |        4247 | 00:35:51 |        5529 | ⭐⭐  |
 | 1   | 09:31:55 |       51925 | 09:35:04 |       48006 | ⭐⭐  |
 
-- **Average Rank:** 10180 (Part 1) | 9434 (Part 2)
+- **Average Rank:** 9574 (Part 1) | 9078 (Part 2)
 - **Best Performance:** Day 11 (Rank 1104, Part 1) | Day 7 (Rank 1172, Part 2)
