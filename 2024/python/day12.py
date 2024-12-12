@@ -108,87 +108,33 @@ def part2() -> int:
                 regions[key] = component
                 component_id += 1
 
-    print(regions)
-
     for r in regions:
         span = regions[r]
         area = len(span)
-        sides = 0
+        perimeter = set()
 
-        dx, dy = (0, 1)
-        sx, sy = span[0]
-        cx, cy = sx, sy
+        for i, j in span:
+            neighbors = [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]
+            for ni, nj in neighbors:
+                if (ni, nj) not in span:
+                    perimeter.add(((i, j), (ni, nj)))
 
-        # start going right, if it not in span, got down, then left, then up until reach back
-        # each time chanage direction increment sides
+        sides = set()
 
-        #print("Starting measure for region", r)
-        visited = set()
+        for i, j in perimeter:
+            remove = False
+            for dx, dy in ((1, 0), (0, 1)):
+                ni = (i[0] + dx, i[1] + dy)
+                nj = (j[0] + dx, j[1] + dy)
 
-        reached_end = False
+                print(i, dx, dy, j, ni, nj)
+                if (ni, nj) in perimeter:
+                    remove = True
 
-        while not reached_end and area != 1:
-            #print("At", cx, cy)
+            if not remove:
+                sides.add((i, j))
 
-            if (cx, cy) == (sx, sy) and sides != 0:
-                #print("back to start, inc side and break")
-                # sides += 1
-                break
-
-            #print("Moving in direction", dx, dy)
-
-            nx, ny = cx + dx, cy + dy
-
-            #print("Checking", nx, ny)
-
-            while True:
-                if (nx, ny) not in span:
-                    #print("next is oob, change direction and inc side")
-                    dx, dy = dy, -dx
-                    nx, ny = cx + dx, cy + dy
-                    #print("direction changed to", dx, dy)
-                    sides += 1
-                else:
-                    #print(nx, ny, "in bounds")
-                    if (nx, ny) not in visited:
-                        #print("... and not is visited, proceeding...")
-                        # in span but not in visited
-                        break
-
-                    else:
-                        #print(nx, ny, "but visited, checking for any unviisted neightbout")
-                        neighbours = (
-                            (cx, cy + 1),
-                            (cx, cy - 1),
-                            (cx + 1, cy),
-                            (cx - 1, cy),
-                        )
-                        neighbours = filter(lambda x: x in span, neighbours)
-                        if any([x not in visited for x in neighbours]):
-                            #print("found unvisited neighbous")
-                            dx, dy = dy, -dx
-                            nx, ny = cx + dx, cy + dy
-                            #print("direction changed to", dx, dy)
-                            # sides += 1
-                        else:
-                            #print("No unvisted neighbours, means reached the end")
-                            reached_end = True
-                            break
-
-            #print("Sides", sides)
-            #print()
-
-            visited.add((cx, cy))
-            cx, cy = nx, ny
-
-        if area != 1:
-            sides = sides * 2
-        else:
-            sides = 4
-
-        print("Region", r, area, sides)
-
-        cost += area * sides
+        cost += area * len(sides)
 
     return cost
 
