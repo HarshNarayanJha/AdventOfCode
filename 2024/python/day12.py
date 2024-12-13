@@ -80,18 +80,18 @@ def part2() -> int:
         component = []
 
         while stack:
-            cur_i, cur_j = stack.pop()
-            if (cur_i, cur_j) in visited:
+            ci, cj = stack.pop()
+            if (ci, cj) in visited:
                 continue
 
-            visited.add((cur_i, cur_j))
-            component.append((cur_i, cur_j))
+            visited.add((ci, cj))
+            component.append((ci, cj))
 
             for ni, nj in [
-                (cur_i - 1, cur_j),
-                (cur_i + 1, cur_j),
-                (cur_i, cur_j - 1),
-                (cur_i, cur_j + 1),
+                (ci - 1, cj),
+                (ci + 1, cj),
+                (ci, cj - 1),
+                (ci, cj + 1),
             ]:
                 if 0 <= ni < H and 0 <= nj < W:
                     if grid[ni][nj] == label and (ni, nj) not in visited:
@@ -127,7 +127,6 @@ def part2() -> int:
                 ni = (i[0] + dx, i[1] + dy)
                 nj = (j[0] + dx, j[1] + dy)
 
-                print(i, dx, dy, j, ni, nj)
                 if (ni, nj) in perimeter:
                     remove = True
 
