@@ -6,7 +6,9 @@ Total Stars Collected: 63 ⭐
 
 ### 2022 (⭐ 17)
 
-_Code repository was lost to time_
+🔨 Languages: Python
+
+📁 [Source Code](2022/)
 
 #### Performance Statistics
 
