@@ -128,35 +128,27 @@ int part1() {
   int cost = 0;
 
   for (const auto &m : machines) {
-    Point a = m[0];
-    Point b = m[1];
-    Point p = m[2];
+    long int x1 = m[0].first, y1 = m[0].second;
+    long int x2 = m[1].first, y2 = m[1].second;
+    long int x3 = m[2].first, y3 = m[2].second;
 
-    int min_cost = INT_MAX;
-    int best_a = 0, best_b = 0;
-    int curr_x = 0, curr_y = 0;
+    // x1*a + x2*b = x3
+    // y1*a + y2*b = y3
+    // solve for a, b using Cramer's rule
+    long int det = x1 * y2 - x2 * y1;
+    if (det != 0) {
+      long int det_a = x3 * y2 - x2 * y3;
+      long int det_b = x1 * y3 - x3 * y1;
 
-    for (int bp = 0; bp < 100; bp++) {
-      int curr_b_x = b.first * bp;
-      int curr_b_y = b.second * bp;
+      long int a = det_a / det;
+      long int b = det_b / det;
 
-      for (int ap = 0; ap < 100; ap++) {
-        curr_x = curr_b_x + a.first * ap;
-        curr_y = curr_b_y + a.second * ap;
-
-        if (curr_x == p.first && curr_y == p.second) {
-          int total_cost = ap * 3 + bp * 1;
-          if (total_cost < min_cost) {
-            min_cost = total_cost;
-            best_a = ap;
-            best_b = bp;
-          }
+      if ((det_a % det == 0) && (det_b % det == 0) && a >= 0 && b >= 0) {
+        long int total_cost = a * 3 + b;
+        if (total_cost > 0) {
+          cost += total_cost;
         }
       }
-    }
-
-    if (min_cost != INT_MAX) {
-      cost += min_cost;
     }
   }
 

@@ -35,7 +35,7 @@ def part1() -> int:
 
     for a, b, p in machines:
         min_total_cost = float("inf")
-        best_a = best_b = 0
+        # best_a = best_b = 0
         curr_x, curr_y = (0, 0)
 
         for bp in range(100):
@@ -46,8 +46,8 @@ def part1() -> int:
                     total_cost = ap * 3 + bp * 1
                     if total_cost < min_total_cost:
                         min_total_cost = total_cost
-                        best_a = ap
-                        best_b = bp
+                        # best_a = ap
+                        # best_b = bp
 
         cost += min_total_cost if min_total_cost != float("inf") else 0
 
