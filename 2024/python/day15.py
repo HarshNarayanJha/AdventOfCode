@@ -19,7 +19,7 @@ def part1() -> int:
                 instructions.append(line.strip())
 
     instructions = "".join(instructions)
-    pprint(grid)
+    # pprint(grid)
     # print(instructions)
 
     H = len(grid)
@@ -41,7 +41,7 @@ def part1() -> int:
 
     directions = {"^": (-1, 0), "<": (0, -1), ">": (0, 1), "v": (1, 0)}
 
-    print("\n\n")
+    # print("\n\n")
 
     for i in instructions:
         print(f"At {(x, y)}")
@@ -87,17 +87,7 @@ def part1() -> int:
 
         x, y = nx, ny
 
-    for i in range(H):
-        for j in range(W):
-            if (i, j) == (x, y):
-                print("@", end="")
-            elif (i, j) in walls:
-                print("#", end="")
-            elif (i, j) in boxes:
-                print("O", end="")
-            else:
-                print(".", end="")
-        print()
+    print_grid(H, W, boxes, walls, (x, y))
 
     gps = 0
 
@@ -107,17 +97,17 @@ def part1() -> int:
     return gps
 
 
-def print_grid(grid, boxes, walls, pos):
+def print_grid(H, W, boxes, walls, pos):
     x, y = pos
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
+    for i in range(H):
+        for j in range(W):
             if (i, j) == (x, y):
                 print("@", end="")
             elif (i, j) in walls:
                 print("#", end="")
             elif (i, j) in boxes:
                 print("[", end="")
-            elif j - 1 > 0 and j - 1 <= len(grid[0]) and (i, j - 1) in boxes:
+            elif j - 1 > 0 and j - 1 <= W and (i, j - 1) in boxes:
                 print("]", end="")
             else:
                 print(".", end="")
@@ -153,13 +143,14 @@ def part2() -> int:
                 instructions.append(line.strip())
 
     instructions = "".join(instructions)
+    # pprint(grid)
 
     H = len(grid)
     W = len(grid[0])
 
     x, y = (0, 0)
     walls = set()
-    boxes = list()  # Store both coordinates of box
+    boxes = list()
 
     for i in range(H):
         for j in range(0, W, 2):
@@ -170,100 +161,68 @@ def part2() -> int:
                 walls.add((i, j + 1))
             elif grid[i][j] == "[":
                 boxes.append((i, j))
-                # boxes.add((i, j + 1))
+                # boxes.append((i, j + 1))
 
-    print_grid(grid, boxes, walls, (x, y))
+    # print_grid(H, W, boxes, walls, (x, y))
 
     directions = {"^": (-1, 0), "<": (0, -1), ">": (0, 1), "v": (1, 0)}
 
     print("\n\n")
 
     for i in instructions:
-        print(f"At {(x, y)}")
-        print(f"Gotta move in {i}")
+        # print(f"At {(x, y)}")
+        # print(f"Gotta move in {i}")
         dx, dy = directions[i]
+
+        to_move = [(x, y)]
+        i = 0
+        can_move = True
+        while i < len(to_move):
+            _x, _y = to_move[i]
+            _nx, _ny = _x + dx, _y + dy
+
+            if (_nx, _ny) in boxes or (_nx, _ny - 1) in boxes:
+                if (_nx, _ny) not in to_move:
+                    to_move.append((_nx, _ny))
+                if (_nx, _ny) in boxes:
+                    if (_nx, _ny + 1) not in to_move:
+                        to_move.append((_nx, _ny + 1))
+                if (_nx, _ny - 1) in boxes:
+                    if (_nx, _ny - 1) not in to_move:
+                        to_move.append((_nx, _ny - 1))
+            elif grid[_nx][_ny] == "#":
+                can_move = False
+                break
+            i += 1
+
+        if not can_move:
+            continue
+
         nx, ny = x + dx, y + dy
 
-        print(f"Checking {(nx, ny)}")
+        # print(f"Checking {(nx, ny)}")
 
-        # don't go in wall
-        if (nx, ny) in walls:
-            print(f"{(nx, ny)} is a wall, won't move")
-            continue
+        to_move = list(filter(lambda x: x in boxes, to_move))
 
-        if nx < 0 or nx >= H or ny < 0 or ny + 1 >= W:
-            print(f"{(nx, ny)} oob, won't move")
-            continue
-
-        # it's a box
-        if (nx, ny) in boxes or (nx, ny - 1) in boxes:
-            if (nx, ny) in boxes:
-                print(f"{(nx, ny), (nx, ny + 1)} is a box, checking if can move, checking next to box")
-            else:
-                print(f"{(nx, ny), (nx, ny - 1)} is a box, checking if can move, checking next to box")
-            # check next in that dir
-            bnx, bny = nx + dx, ny + (dy * 2)
-
-            boxes_to_move = set()
-
-            while (bnx, bny) in boxes or (bnx, bny - 1) in boxes:
-                if (bnx, bny) in boxes:
-                    print(f"{(bnx, bny), (bnx, bny + 1)} is also a box")
-                    boxes_to_move.add((bnx, bny))
-                else:
-                    print(f"{(bnx, bny), (bnx, bny - 1)} is also a box")
-                    boxes_to_move.add((bnx, bny - 1))
-                    print("checking for any touching boxes")
-                    if (bnx + dx, bny - 1 + (dy * 2)) in boxes:
-                        boxes_to_move.add((bnx + dx, bny - 1 + (dy * 2)))
-                    elif (bnx + dx, bny - 1 + (dy * 2) - 1) in boxes:
-                        boxes_to_move.add((bnx + dx, bny - 1 + (dy * 2) - 1))
-
-                bnx, bny = bnx + dx, bny + (dy * 2)
-
-            if (bnx, bny) in walls:
-                print(f"{(bnx, bny)} is a wall, can't move these boxes")
+        # print("Will move", to_move)
+        for mx, my in to_move:
+            if (mx, my) == (x, y):
                 continue
 
-            if bnx < 0 or bnx >= H or bny < 0 or bny + 1 >= W:
-                print(f"{(bnx, bny)} is a oob, can't move these boxes")
-                continue
+            if (mx, my) in boxes:
+                # print(f"Moving {(mx, my)} to {(mx + dx, my + dy)}")
+                boxes.remove((mx, my))
+                boxes.append((mx + dx, my + dy))
 
-            print(f"{(bnx, bny)} is empty, can move all those boxes")
-            tbnx, tbny = nx, ny
-
-            num_boxes = abs(tbnx - bnx) or abs(tbny - bny) // 2
-
-            if (tbnx, tbny) not in boxes:
-                tbny -= 1
-
-            print("Begin moving boxes")
-            print(boxes_to_move)
-            for _ in range(num_boxes):
-                print(f"Remove {(tbnx, tbny)} from boxes")
-                boxes.remove((tbnx, tbny))
-                # boxes.remove((tbnx, tbny + 1))
-                tbnx, tbny = tbnx + dx, tbny + dy
-                print(f"Add {(tbnx, tbny)} to boxes")
-                boxes.append((tbnx, tbny))
-                tbnx, tbny = tbnx + dx, tbny + dy
-                # boxes.add((tbnx, tbny + 1))
         x, y = nx, ny
 
-        print_grid(grid, boxes, walls, (x, y))
-
-        import time
-
-        # time.sleep(1)
-
-    print_grid(grid, boxes, walls, (x, y))
+        # print_grid(H, W, boxes, walls, (x, y))
 
     gps = 0
 
-    # Calculate distances from edges for each box
+    # print(boxes)
     for bx, by in boxes:
-        if by % 2 == 0:  # Only count left edge of each box
-            gps += 100 * bx + (by // 2)
+        gps += 100 * bx + by
 
     return gps
 
