@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 use crate::day::{Day, Solution};
 
@@ -19,9 +19,7 @@ impl Solution for Day15 {
         let grid: Vec<Vec<char>> = input
             .lines()
             .take_while(|line| !line.is_empty())
-            .map(|line| {
-                line.chars().collect()
-            })
+            .map(|line| line.chars().collect())
             .collect();
 
         let h = grid.len();
@@ -42,15 +40,13 @@ impl Solution for Day15 {
             .iter()
             .enumerate()
             .flat_map(|(i, row)| {
-                row.iter().enumerate().filter_map(
-                    move |(j, c)| {
-                        if *c == '#' {
-                            Some((i as i32, j as i32))
-                        } else {
-                            None
-                        }
-                    },
-                )
+                row.iter().enumerate().filter_map(move |(j, c)| {
+                    if *c == '#' {
+                        Some((i as i32, j as i32))
+                    } else {
+                        None
+                    }
+                })
             })
             .collect();
 
@@ -58,15 +54,13 @@ impl Solution for Day15 {
             .iter()
             .enumerate()
             .flat_map(|(i, row)| {
-                row.iter().enumerate().filter_map(
-                    move |(j, c)| {
-                        if *c == 'O' {
-                            Some((i as i32, j as i32))
-                        } else {
-                            None
-                        }
-                    },
-                )
+                row.iter().enumerate().filter_map(move |(j, c)| {
+                    if *c == 'O' {
+                        Some((i as i32, j as i32))
+                    } else {
+                        None
+                    }
+                })
             })
             .collect();
 
@@ -74,19 +68,17 @@ impl Solution for Day15 {
             .iter()
             .enumerate()
             .flat_map(|(i, row)| {
-                row.iter().enumerate().filter_map(
-                    move |(j, c)| {
-                        if *c == '@' {
-                            Some((i as i32, j as i32))
-                        } else {
-                            None
-                        }
-                    },
-                )
+                row.iter().enumerate().filter_map(move |(j, c)| {
+                    if *c == '@' {
+                        Some((i as i32, j as i32))
+                    } else {
+                        None
+                    }
+                })
             })
             .collect::<Vec<(i32, i32)>>()[0];
 
-        let directions = std::collections::HashMap::from([
+        let directions = HashMap::from([
             ('^', (-1, 0)),
             ('<', (0, -1)),
             ('>', (0, 1)),
@@ -128,22 +120,152 @@ impl Solution for Day15 {
                     (tbnx, tbny) = (tbnx + dx, tbny + dy);
                     boxes.push((tbnx, tbny));
                 }
-
             }
 
             (x, y) = (nx, ny);
-
         }
 
-        boxes.iter().fold(0, |acc, &(bx, by)| {
-            acc + (bx as u64) * 100 + (by as u64)
-        })
+        boxes
+            .iter()
+            .fold(0, |acc, &(bx, by)| acc + (bx as u64) * 100 + (by as u64))
     }
 
     fn part2(&self) -> u64 {
         let input = include_str!("../../data/input15.txt");
 
-        0
+        let grid: Vec<Vec<char>> = input
+            .lines()
+            .take_while(|line| !line.is_empty())
+            .map(|line| {
+                let mut expanded = vec![];
+                for c in line.chars() {
+                    if c == '#' {
+                        expanded.extend_from_slice(&vec!['#', '#']);
+                    } else if c == 'O' {
+                        expanded.extend_from_slice(&vec!['[', ']']);
+                    } else if c == '.' {
+                        expanded.extend_from_slice(&vec!['.', '.']);
+                    } else if c == '@' {
+                        expanded.extend_from_slice(&vec!['@', '.']);
+                    }
+                }
+                expanded
+            })
+            .collect();
+
+        let instructions: String = input
+            .lines()
+            .skip_while(|line| !line.is_empty())
+            .skip(1)
+            .collect();
+
+        let walls: HashSet<(i32, i32)> = grid
+            .iter()
+            .enumerate()
+            .flat_map(|(i, row)| {
+                row.iter().enumerate().filter_map(move |(j, c)| {
+                    if *c == '#' {
+                        Some((i as i32, j as i32))
+                    } else {
+                        None
+                    }
+                })
+            })
+            .collect();
+
+        let mut boxes: Vec<(i32, i32)> = grid
+            .iter()
+            .enumerate()
+            .flat_map(|(i, row)| {
+                row.iter().enumerate().filter_map(move |(j, c)| {
+                    if *c == '[' {
+                        Some((i as i32, j as i32))
+                    } else {
+                        None
+                    }
+                })
+            })
+            .collect();
+
+        let (mut x, mut y): (i32, i32) = grid
+            .iter()
+            .enumerate()
+            .flat_map(|(i, row)| {
+                row.iter().enumerate().filter_map(move |(j, c)| {
+                    if *c == '@' {
+                        Some((i as i32, j as i32))
+                    } else {
+                        None
+                    }
+                })
+            })
+            .collect::<Vec<(i32, i32)>>()[0];
+
+        let directions = HashMap::from([
+            ('^', (-1, 0)),
+            ('<', (0, -1)),
+            ('>', (0, 1)),
+            ('v', (1, 0)),
+        ]);
+
+        for i in instructions.chars() {
+            let (dx, dy) = directions.get(&i).unwrap().clone();
+
+            let mut to_move = vec![(x, y)];
+            let mut i = 0;
+            let mut can_move = true;
+
+            while i < to_move.len() {
+                let (_x, _y) = to_move[i];
+                let (_nx, _ny) = (_x + dx, _y + dy);
+
+                if boxes.contains(&(_nx, _ny)) || boxes.contains(&(_nx, _ny - 1)) {
+                    if !to_move.contains(&(_nx, _ny)) {
+                        to_move.push((_nx, _ny));
+                    }
+
+                    if boxes.contains(&(_nx, _ny)) {
+                        if !to_move.contains(&(_nx, _ny + 1)) {
+                            to_move.push((_nx, _ny + 1));
+                        }
+                    }
+                    if boxes.contains(&(_nx, _ny - 1)) {
+                        if !to_move.contains(&(_nx, _ny - 1)) {
+                            to_move.push((_nx, _ny - 1));
+                        }
+                    }
+                } else if walls.contains(&(_nx, _ny)) {
+                    can_move = false;
+                    break;
+                }
+
+                i += 1;
+            }
+
+            if !can_move {
+                continue;
+            }
+
+            let (nx, ny) = (x + dx, y + dy);
+
+            to_move.retain(|x| boxes.contains(x));
+
+            for &(mx, my) in to_move.iter() {
+                if (mx, my) == (x, y) {
+                    continue;
+                }
+                if boxes.contains(&(mx, my)) {
+                    boxes.retain(|&x| x != (mx, my));
+                    boxes.push((mx + dx, my + dy))
+                }
+            }
+
+            (x, y) = (nx, ny);
+        }
+
+        boxes
+            .iter()
+            .fold(0, |acc, &(bx, by)| acc + (bx as u64) * 100 + (by as u64))
     }
 
     fn get_day(&self) -> u8 {

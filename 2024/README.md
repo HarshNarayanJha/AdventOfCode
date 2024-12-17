@@ -96,6 +96,18 @@ python day12.py
 python day13.py
   Time (mean ± σ):      1.010 s ±  0.026 s    [User: 1.078 s, System: 1.247 s]
   Range (min … max):    0.962 s …  1.045 s    10 runs
+python day14.py
+  Time (mean ± σ):      1.433 s ±  0.041 s    [User: 1.382 s, System: 0.039 s]
+  Range (min … max):    1.378 s …  1.508 s    10 runs
+python day15.py
+  Time (mean ± σ):      1.422 s ±  0.020 s    [User: 1.380 s, System: 0.038 s]
+  Range (min … max):    1.386 s …  1.451 s    10 runs
+python day16.py
+  Time (mean ± σ):      3.180 s ±  0.205 s    [User: 3.036 s, System: 0.062 s]
+  Range (min … max):    3.035 s …  3.326 s    2 runs
+python day17.py
+  Time (mean ± σ):      68.2 ms ±   3.5 ms    [User: 32.8 ms, System: 36.0 ms]
+  Range (min … max):    62.9 ms …  75.3 ms    43 runs
 ```
 
 </details>
