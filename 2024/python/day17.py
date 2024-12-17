@@ -17,8 +17,6 @@ def part1() -> int:
             else:
                 program = list(map(int, line.split(": ")[1].split(",")))
 
-    print(registers, program)
-
     ip = 0
     out = []
 
@@ -27,7 +25,6 @@ def part1() -> int:
         literal_operand = program[ip + 1]
         combo_operand = 0
 
-        # valid = True
         if literal_operand in (0, 1, 2, 3):
             combo_operand = literal_operand
         elif literal_operand == 4:
@@ -81,7 +78,7 @@ def part1() -> int:
             ip += 2
 
     print(",".join(map(str, out)))
-    return 0
+    return None
 
 
 def part2() -> int:
@@ -103,82 +100,72 @@ def part2() -> int:
             else:
                 program = list(map(int, line.split(": ")[1].split(",")))
 
-    # print(registers, program)
-
     # 35184372088832 start of 16 digits
-    # 175922483059205 start of last 0
     # 281475483175314 start of 17
     # lies somewhere inbetween
     ## IMP
-    a = 35184372088832
-    b = 281475483175314
+    # a = 35184372088832
+    # b = 281475483175314
 
-    # start of 2 at first in reverse
-    # a = 246290604621824
+    matching_As = {0}
 
-    # start of some
-    a = 5611333465124437
+    for expected in program[::-1]:
+        for A in matching_As.copy():
+            matching_As.remove(A)
 
-    while True:
-        registers["A"] = a
-        ip = 0
-        out = []
-        program_len = len(program) - 1
-        target = [2, 4, 1, 1, 7, 5, 0, 3, 1, 4, 4, 4, 5, 5, 3, 0]
+            A *= 8
+            for offset in range(8):
+                registers["A"] = A + offset
+                registers["B"] = 0
+                registers["C"] = 0
 
-        while ip < program_len:
-            inst = program[ip]
-            literal_operand = program[ip + 1]
+                ip = 0
+                out = []
+                program_len = len(program) - 1
 
-            if literal_operand <= 3:
-                combo_operand = literal_operand
-            elif literal_operand == 4:
-                combo_operand = registers["A"]
-            elif literal_operand == 5:
-                combo_operand = registers["B"]
-            else:
-                combo_operand = registers["C"]
+                while ip < program_len:
+                    inst = program[ip]
+                    literal_operand = program[ip + 1]
 
-            jumped = False
+                    if literal_operand <= 3:
+                        combo_operand = literal_operand
+                    elif literal_operand == 4:
+                        combo_operand = registers["A"]
+                    elif literal_operand == 5:
+                        combo_operand = registers["B"]
+                    else:
+                        combo_operand = registers["C"]
 
-            match inst:
-                case 0:
-                    registers["A"] = registers["A"] >> combo_operand
-                case 1:
-                    registers["B"] ^= literal_operand
-                case 2:
-                    registers["B"] = combo_operand & 7
-                case 3:
-                    if registers["A"] != 0:
-                        jumped = True
-                        ip = literal_operand
-                case 4:
-                    registers["B"] ^= registers["C"]
-                case 5:
-                    out.append(combo_operand & 7)
-                case 6:
-                    registers["B"] = registers["A"] >> combo_operand
-                case 7:
-                    registers["C"] = registers["A"] >> combo_operand
+                    jumped = False
 
-            if not jumped:
-                ip += 2
+                    match inst:
+                        case 0:
+                            registers["A"] = registers["A"] >> combo_operand
+                        case 1:
+                            registers["B"] ^= literal_operand
+                        case 2:
+                            registers["B"] = combo_operand & 7
+                        case 3:
+                            if registers["A"] != 0:
+                                jumped = True
+                                ip = literal_operand
+                        case 4:
+                            registers["B"] ^= registers["C"]
+                        case 5:
+                            out.append(combo_operand & 7)
+                        case 6:
+                            registers["B"] = registers["A"] >> combo_operand
+                        case 7:
+                            registers["C"] = registers["A"] >> combo_operand
 
-        print(a, oct(a), ",".join(map(str, out))[::-1])
-        import time
-        time.sleep(0.1)
+                    if not jumped:
+                        ip += 2
 
-        if out == target:
-            time.sleep(1000)
+                if out and out[0] == expected:
+                    matching_As.add(A + offset)
 
-        a += 1
-
-        # if len(out) != 16:
-            # break
-
-    # print(','.join(map(str, out)))
-    return 0
+    return min(matching_As)
 
 
-# print(part1())
+print(part1())
 print(part2())
