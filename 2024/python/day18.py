@@ -62,56 +62,62 @@ def part2() -> int:
         for line in inp.readlines():
             bcoords.append(tuple(map(int, line.strip().split(","))))
 
-    GRID_SIZE = 7
-    to_sim = 12
+    GRID_SIZE = 71
+    to_sim = 1024
 
-    grid = []
-    for i in range(GRID_SIZE):
-        row = []
-        for j in range(GRID_SIZE):
-            if (j, i) in bcoords[:to_sim]:
-                row.append("#")
-            else:
-                row.append(".")
-        grid.append(row)
+    while to_sim <= len(bcoords):
 
-    sx, sy = 0, 0
-    ex, ey = GRID_SIZE - 1, GRID_SIZE - 1
+        grid = []
+        for i in range(GRID_SIZE):
+            row = []
+            for j in range(GRID_SIZE):
+                if (j, i) in bcoords[:to_sim]:
+                    row.append("#")
+                else:
+                    row.append(".")
+            grid.append(row)
 
-    seen = set()
-    # steps, pos, direction
-    pq = [(0, (sx, sy), 0, [(sx, sy)])]
-    least_steps = 0
-    least_ = None
+        sx, sy = 0, 0
+        ex, ey = GRID_SIZE - 1, GRID_SIZE - 1
 
-    while pq:
-        cost, (cx, cy), direction,  = heappop(pq)
+        seen = set()
+        # steps, pos, direction
+        pq = [(0, (sx, sy), 0)]
+        least_steps = 0
 
-        if (cx, cy) == (ex, ey):
-            least_steps = cost
-            least_ = path
-            break
+        while pq:
+            cost, (cx, cy), direction  = heappop(pq)
 
-        if (cx, cy, direction) in seen:
-            continue
+            if (cx, cy) == (ex, ey):
+                least_steps = cost
+                break
 
-        seen.add((cx, cy, direction))
+            if (cx, cy, direction) in seen:
+                continue
 
-        dx = [0, 1, 0, -1][direction]
-        dy = [1, 0, -1, 0][direction]
-        nx, ny = cx + dx, cy + dy
+            seen.add((cx, cy, direction))
 
-        if 0 <= nx < GRID_SIZE and 0 <= ny < GRID_SIZE and grid[nx][ny] != '#':
-            heappush(pq, (cost + 1, (nx, ny), direction, path[:] + [(nx, ny)]))
+            dx = [0, 1, 0, -1][direction]
+            dy = [1, 0, -1, 0][direction]
+            nx, ny = cx + dx, cy + dy
 
-        new_direction = (direction - 1) % 4
-        heappush(pq, (cost, (cx, cy), new_direction, path))
+            if 0 <= nx < GRID_SIZE and 0 <= ny < GRID_SIZE and grid[nx][ny] != '#':
+                heappush(pq, (cost + 1, (nx, ny), direction))
 
-        new_direction = (direction + 1) % 4
-        heappush(pq, (cost, (cx, cy), new_direction, path))
+            new_direction = (direction - 1) % 4
+            heappush(pq, (cost, (cx, cy), new_direction))
 
-    print(least_path)
-    return least_steps
+            new_direction = (direction + 1) % 4
+            heappush(pq, (cost, (cx, cy), new_direction))
+
+        print(to_sim, least_steps)
+        to_sim += 1
+
+        if least_steps == 0:
+            print(bcoords[to_sim-2][::-1])
+            return 0
+
+    return 0
 
 
 print(part1())
