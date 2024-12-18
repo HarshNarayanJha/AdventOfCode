@@ -26,7 +26,7 @@ def part1() -> int:
 
     # 0=east, 1=south, 2=west, 3=north
     seen = set()
-    # cost, pos, direction, path
+    # cost, pos, direction
     pq = [(0, (sx, sy), 0)]
     best_cost = 0
 
