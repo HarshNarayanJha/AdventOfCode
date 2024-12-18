@@ -7,8 +7,8 @@ def part1() -> int:
         for line in inp.readlines():
             bcoords.append(tuple(map(int, line.strip().split(","))))
 
-    GRID_SIZE = 7
-    to_sim = 12
+    GRID_SIZE = 71
+    to_sim = 1024
 
     sx, sy = 0, 0
     ex, ey = GRID_SIZE - 1, GRID_SIZE - 1
