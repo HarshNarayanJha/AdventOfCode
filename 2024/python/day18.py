@@ -1,5 +1,5 @@
-from pprint import pprint
 from heapq import heappush, heappop
+
 
 def part1() -> int:
     bcoords = list()
@@ -10,16 +10,6 @@ def part1() -> int:
     GRID_SIZE = 7
     to_sim = 12
 
-    grid = []
-    for i in range(GRID_SIZE):
-        row = []
-        for j in range(GRID_SIZE):
-            if (j, i) in bcoords[:to_sim]:
-                row.append("#")
-            else:
-                row.append(".")
-        grid.append(row)
-
     sx, sy = 0, 0
     ex, ey = GRID_SIZE - 1, GRID_SIZE - 1
 
@@ -27,6 +17,8 @@ def part1() -> int:
     # steps, pos, direction
     pq = [(0, (sx, sy), 0)]
     least_steps = 0
+
+    blocks = set(bcoords[:to_sim])
 
     while pq:
         cost, (cx, cy), direction = heappop(pq)
@@ -44,7 +36,7 @@ def part1() -> int:
         dy = [1, 0, -1, 0][direction]
         nx, ny = cx + dx, cy + dy
 
-        if 0 <= nx < GRID_SIZE and 0 <= ny < GRID_SIZE and grid[nx][ny] != '#':
+        if 0 <= nx < GRID_SIZE and 0 <= ny < GRID_SIZE and (ny, nx) not in blocks:
             heappush(pq, (cost + 1, (nx, ny), direction))
 
         new_direction = (direction - 1) % 4
@@ -65,28 +57,24 @@ def part2() -> int:
     GRID_SIZE = 71
     to_sim = 1024
 
-    while to_sim <= len(bcoords):
+    pi = to_sim
+    qj = len(bcoords) - 1
 
-        grid = []
-        for i in range(GRID_SIZE):
-            row = []
-            for j in range(GRID_SIZE):
-                if (j, i) in bcoords[:to_sim]:
-                    row.append("#")
-                else:
-                    row.append(".")
-            grid.append(row)
+    while pi < qj:
+        m = pi + (qj - pi) // 2
 
         sx, sy = 0, 0
         ex, ey = GRID_SIZE - 1, GRID_SIZE - 1
 
         seen = set()
-        # steps, pos, direction
         pq = [(0, (sx, sy), 0)]
         least_steps = 0
 
+        # Pre-compute blocked coordinates for current m
+        blocked = set(bcoords[:m])
+
         while pq:
-            cost, (cx, cy), direction  = heappop(pq)
+            cost, (cx, cy), direction = heappop(pq)
 
             if (cx, cy) == (ex, ey):
                 least_steps = cost
@@ -101,7 +89,7 @@ def part2() -> int:
             dy = [1, 0, -1, 0][direction]
             nx, ny = cx + dx, cy + dy
 
-            if 0 <= nx < GRID_SIZE and 0 <= ny < GRID_SIZE and grid[nx][ny] != '#':
+            if 0 <= nx < GRID_SIZE and 0 <= ny < GRID_SIZE and (ny, nx) not in blocked:
                 heappush(pq, (cost + 1, (nx, ny), direction))
 
             new_direction = (direction - 1) % 4
@@ -110,13 +98,14 @@ def part2() -> int:
             new_direction = (direction + 1) % 4
             heappush(pq, (cost, (cx, cy), new_direction))
 
-        print(to_sim, least_steps)
-        to_sim += 1
-
         if least_steps == 0:
-            print(bcoords[to_sim-2][::-1])
-            return 0
+            qj = m - 1
+        else:
+            pi = m + 1
 
+    assert pi == qj
+
+    print(pi, bcoords[pi - 1])
     return 0
 
 
