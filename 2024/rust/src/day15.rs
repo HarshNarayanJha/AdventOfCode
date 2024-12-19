@@ -234,7 +234,7 @@ impl Solution for Day15 {
                             to_move.push((_nx, _ny - 1));
                         }
                     }
-                } else if walls.contains(&(_nx, _ny)) {
+                } else if grid[_nx as usize][_ny as usize] == '#' {
                     can_move = false;
                     break;
                 }

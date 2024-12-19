@@ -14,7 +14,6 @@ def part1() -> int:
     ex, ey = GRID_SIZE - 1, GRID_SIZE - 1
 
     seen = set()
-    # steps, pos, direction
     pq = [(0, (sx, sy), 0)]
     least_steps = 0
 
@@ -70,7 +69,6 @@ def part2() -> int:
         pq = [(0, (sx, sy), 0)]
         least_steps = 0
 
-        # Pre-compute blocked coordinates for current m
         blocked = set(bcoords[:m])
 
         while pq:
