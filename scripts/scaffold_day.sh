@@ -27,13 +27,13 @@ for lang in "python" "cpp" "rust"; do
         if [ ! -f "src/day$day.rs" ]; then
             cp "src/_template.rs" "src/day$day.rs"
             sed -i "s/N/$day/g" "src/day$day.rs"
-            sed -i "s/pub mod day$(($day-1));/pub mod day$(($day-1));\npub mod day$day;/" "src/main.rs"
+            sed -i "s/pub mod day$((${day-1}));/pub mod day$((${day-1}));\npub mod day$day;/" "src/main.rs"
         fi
     fi
     cd ..
 done
 
-echo "Creating input file!"
 if [ ! -f "data/input$day.txt" ]; then
+    echo "Creating input file!"
     touch "data/input$day.txt"
 fi
