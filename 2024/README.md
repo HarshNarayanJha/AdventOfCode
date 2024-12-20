@@ -114,6 +114,9 @@ python day18.py
 python day19.py
   Time (mean ± σ):      2.382 s ±  0.113 s    [User: 2.253 s, System: 0.076 s]
   Range (min … max):    2.243 s …  2.541 s    10 runs
+python day20.py
+  Time (mean ± σ):      1.825 s ±  0.052 s    [User: 1.771 s, System: 0.038 s]
+  Range (min … max):    1.762 s …  1.912 s    10 runs
 ```
 
 </details>
