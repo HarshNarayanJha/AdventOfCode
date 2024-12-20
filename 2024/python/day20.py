@@ -1,4 +1,3 @@
-from collections import defaultdict
 from heapq import heappop, heappush
 
 
@@ -14,7 +13,8 @@ def race(s, e, walls, H, W):
         pico, cx, cy = heappop(pq)
 
         if (cx, cy) == (ex, ey):
-            return pico
+            best_time[(ex, ey)] = pico
+            break
 
         for dx, dy in directions:
             nx = cx + dx
@@ -26,7 +26,7 @@ def race(s, e, walls, H, W):
                     best_time[(nx, ny)] = new_time
                     heappush(pq, (new_time, nx, ny))
 
-    return best_time[(sx, sy)]
+    return best_time
 
 
 def part1() -> int:
@@ -43,7 +43,63 @@ def part1() -> int:
     H = len(maze)
     W = len(maze[0])
 
-    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    for i in range(H):
+        for j in range(W):
+            if maze[i][j] == "#":
+                walls.add((i, j))
+            elif maze[i][j] == "S":
+                sx, sy = i, j
+            elif maze[i][j] == "E":
+                ex, ey = i, j
+    # cost, pos
+    best_times = race((sx, sy), (ex, ey), walls, H, W)
+    # best_time = best_times[(ex, ey)]
+
+    # print("Found best time", best_time)
+    # print("Finding cheats")
+
+    ans = 0
+
+    for pos in best_times:
+        this_picos = best_times[pos]
+        cx, cy = pos
+
+        for dx in range(-2, 2 + 1):
+            for dy in range(-2, 2 + 1):
+                cheated_picos = abs(dx) + abs(dy)
+                if cheated_picos > 2:
+                    continue
+                nx, ny = cx + dx, cy + dy
+
+                if (nx, ny) not in best_times:
+                    continue
+
+                target_picos = best_times[(nx, ny)]
+                if target_picos < this_picos:
+                    continue
+
+                non_cheated_picos = target_picos - this_picos
+                saved = non_cheated_picos - cheated_picos
+
+                if saved >= 100:
+                    ans += 1
+
+    return ans
+
+
+def part2() -> int:
+    maze = []
+    with open("../data/input20.txt", "r") as inp:
+        lines = inp.readlines()
+        for line in lines:
+            maze.append(list(line.strip()))
+
+    walls = set()
+    sx, sy = 0, 0
+    ex, ey = 0, 0
+
+    H = len(maze)
+    W = len(maze[0])
 
     for i in range(H):
         for j in range(W):
@@ -54,49 +110,36 @@ def part1() -> int:
             elif maze[i][j] == "E":
                 ex, ey = i, j
     # cost, pos
-    best_time = race((sx, sy), (ex, ey), walls, H, W)
+    best_times = race((sx, sy), (ex, ey), walls, H, W)
+    # best_time = best_times[(ex, ey)]
 
-    print("Found best time", best_time)
-    print("Finding cheats")
+    ans = 0
 
-    cheats = defaultdict(int)
+    for pos in best_times:
+        this_picos = best_times[pos]
+        cx, cy = pos
 
-    removed = set()
+        for dx in range(-20, 20 + 1):
+            for dy in range(-20, 20 + 1):
+                cheated_picos = abs(dx) + abs(dy)
+                if cheated_picos > 20:
+                    continue
+                nx, ny = cx + dx, cy + dy
 
-    for i in range(H):
-        print("Row", i)
-        for j in range(W):
-            if (i, j) in walls:
-                continue
-            for dx, dy in directions:
-                nx, ny = i + dx, j + dy
-
-                if (nx, ny) not in walls or (nx, ny) in removed:
+                if (nx, ny) not in best_times:
                     continue
 
-                nx2, ny2 = nx + dx, ny + dy
+                target_picos = best_times[(nx, ny)]
+                if target_picos < this_picos:
+                    continue
 
-                if (nx2, ny2) not in walls and 0 <= nx2 < H and 0 <= ny2 < W:
-                    # okay so this wall is removable
-                    # remove it
-                    walls.remove((nx, ny))
-                    removed.add((nx, ny))
+                non_cheated_picos = target_picos - this_picos
+                saved = non_cheated_picos - cheated_picos
 
-                    picos = race((sx, sy), (ex, ey), walls, H, W)
-                    if best_time - picos > 0:
-                        cheats[best_time - picos] += 1
+                if saved >= 100:
+                    ans += 1
 
-                    walls.add((nx, ny))
-
-    print(cheats)
-    res = 0
-    for c in cheats:
-        if c >= 100:
-            res += cheats[c]
-    return res
-
-
-def part2() -> int: ...
+    return ans
 
 
 print(part1())
