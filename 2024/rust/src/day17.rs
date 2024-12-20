@@ -16,22 +16,22 @@ impl Solution for Day17 {
     fn part1(&self) -> u64 {
         let input = include_str!("../../data/input17.txt");
 
-        let mut RA: u64 = 0;
-        let mut RB: u64 = 0;
-        let mut RC: u64 = 0;
+        let mut ra: u64 = 0;
+        let mut rb: u64 = 0;
+        let mut rc: u64 = 0;
 
-        let _ = input
+        input
             .lines()
             .take_while(|line| !line.is_empty())
-            .map(|line| {
+            .for_each(|line| {
                 let parts: Vec<&str> = line.split_whitespace().collect();
                 let (reg, val) = (parts[1], parts[2]);
                 if reg.contains('A') {
-                    RA = val.parse().unwrap();
+                    ra = val.parse().unwrap();
                 } else if reg.contains('B') {
-                    RB = val.parse().unwrap();
-                } else if reg.contains('B') {
-                    RC = val.parse().unwrap();
+                    rb = val.parse().unwrap();
+                } else if reg.contains('C') {
+                    rc = val.parse().unwrap();
                 }
             });
 
@@ -46,33 +46,33 @@ impl Solution for Day17 {
             .collect();
 
         let mut ip: usize = 0;
-        let mut out: Vec<u64> = vec![];
+        let mut out: Vec<u64> = Vec::with_capacity(program.len());
 
         while ip < program.len() - 1 {
             let inst = program[ip];
             let literal_operand = program[ip + 1];
             let combo_operand = match literal_operand {
                 0..=3 => literal_operand as u64,
-                4 => RA,
-                5 => RB,
-                6 => RC,
+                4 => ra,
+                5 => rb,
+                6 => rc,
                 _ => 0,
             };
 
             let mut jumped = false;
 
             match inst {
-                0 => RA >>= combo_operand,
-                1 => RA ^= literal_operand as u64,
-                2 => RB = combo_operand & 7,
-                3 if RA != 0 => {
+                0 => ra >>= combo_operand,
+                1 => ra ^= literal_operand as u64,
+                2 => rb = combo_operand & 7,
+                3 if ra != 0 => {
                     jumped = true;
-                    ip = literal_operand as usize
+                    ip = literal_operand as usize;
                 }
-                4 => RB ^= RC,
+                4 => rb ^= rc,
                 5 => out.push(combo_operand & 7),
-                6 => RB = RA >> combo_operand,
-                7 => RC = RC >> combo_operand,
+                6 => rb = ra >> combo_operand,
+                7 => rc = rc >> combo_operand,
                 _ => {}
             }
 
@@ -95,10 +95,6 @@ impl Solution for Day17 {
     fn part2(&self) -> u64 {
         let input = include_str!("../../data/input17.txt");
 
-        let mut RA: u64 = 0;
-        let mut RB: u64 = 0;
-        let mut RC: u64 = 0;
-
         let program: Vec<u8> = input
             .lines()
             .skip_while(|line| !line.is_empty())
@@ -112,15 +108,15 @@ impl Solution for Day17 {
         let mut matching_as: HashSet<u64> = HashSet::from([0]);
 
         for &expected in program.iter().rev() {
-            for A in matching_as.clone() {
-                matching_as.remove(&A);
+            for a in matching_as.clone() {
+                matching_as.remove(&a);
 
-                let A = A * 8;
+                let a = a * 8;
 
                 for x in 0..8 {
-                    RA = A + x;
-                    RB = 0;
-                    RC = 0;
+                    let mut ra = a + x;
+                    let mut rb = 0;
+                    let mut rc = 0;
 
                     let mut ip: usize = 0;
                     let mut out: Vec<u64> = vec![];
@@ -130,26 +126,26 @@ impl Solution for Day17 {
                         let literal_operand = program[ip + 1];
                         let combo_operand = match literal_operand {
                             0..=3 => literal_operand as u64,
-                            4 => RA,
-                            5 => RB,
-                            6 => RC,
+                            4 => ra,
+                            5 => rb,
+                            6 => rc,
                             _ => 0,
                         };
 
                         let mut jumped = false;
 
                         match inst {
-                            0 => RA >>= combo_operand,
-                            1 => RA ^= literal_operand as u64,
-                            2 => RB = combo_operand & 7,
-                            3 if RA != 0 => {
+                            0 => ra >>= combo_operand,
+                            1 => ra ^= literal_operand as u64,
+                            2 => rb = combo_operand & 7,
+                            3 if ra != 0 => {
                                 jumped = true;
-                                ip = literal_operand as usize
+                                ip = literal_operand as usize;
                             }
-                            4 => RB ^= RC,
+                            4 => rb ^= rc,
                             5 => out.push(combo_operand & 7),
-                            6 => RB = RA >> combo_operand,
-                            7 => RC = RC >> combo_operand,
+                            6 => rb = ra >> combo_operand,
+                            7 => rc = rc >> combo_operand,
                             _ => {}
                         }
 
@@ -159,7 +155,7 @@ impl Solution for Day17 {
                     }
 
                     if !out.is_empty() && out[0] == expected as u64 {
-                        matching_as.insert(A + x);
+                        matching_as.insert(a + x);
                     }
                 }
             }

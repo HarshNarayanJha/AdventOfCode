@@ -159,20 +159,6 @@ impl Solution for Day15 {
             .skip(1)
             .collect();
 
-        let walls: HashSet<(i32, i32)> = grid
-            .iter()
-            .enumerate()
-            .flat_map(|(i, row)| {
-                row.iter().enumerate().filter_map(move |(j, c)| {
-                    if *c == '#' {
-                        Some((i as i32, j as i32))
-                    } else {
-                        None
-                    }
-                })
-            })
-            .collect();
-
         let mut boxes: Vec<(i32, i32)> = grid
             .iter()
             .enumerate()

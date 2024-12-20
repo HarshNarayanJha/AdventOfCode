@@ -108,6 +108,12 @@ python day16.py
 python day17.py
   Time (mean ± σ):      68.2 ms ±   3.5 ms    [User: 32.8 ms, System: 36.0 ms]
   Range (min … max):    62.9 ms …  75.3 ms    43 runs
+python day18.py
+  Time (mean ± σ):     295.1 ms ±   8.5 ms    [User: 216.1 ms, System: 71.3 ms]
+  Range (min … max):   282.5 ms … 310.4 ms    10 runs
+python day19.py
+  Time (mean ± σ):      2.382 s ±  0.113 s    [User: 2.253 s, System: 0.076 s]
+  Range (min … max):    2.243 s …  2.541 s    10 runs
 ```
 
 </details>
@@ -254,6 +260,47 @@ python day17.py
 ⚡ Took 0.00004ms
 
 ⚡ Took Total 0.14969ms
+
+❄️  -------------------- ❄️
+🎄 Day 15🎄
+🎯 Part 1 -> 1568399
+⚡ Took 7.78773ms
+
+🎯 Part 2 -> 1219474
+⚡ Took 18.70000ms
+
+⚡ Took Total 26.48773ms
+❄️  -------------------- ❄️
+
+🎄 Day 16🎄
+🎯 Part 1 -> 109516
+⚡ Took 15.52170ms
+
+🎯 Part 2 -> 568
+⚡ Took 2259.50076ms
+
+⚡ Took Total 2275.02245ms
+❄️  -------------------- ❄️
+
+🎄 Day 18🎄
+🎯 Part 1 -> 364
+⚡ Took 6.16400ms
+
+(52, 28)
+🎯 Part 2 -> 0
+⚡ Took 7.70778ms
+
+⚡ Took Total 13.87178ms
+❄️  -------------------- ❄️
+
+🎄 Day 19🎄
+🎯 Part 1 -> 347
+⚡ Took 33.56446ms
+
+🎯 Part 2 -> 919219286602165
+⚡ Took 33.12376ms
+
+⚡ Took Total 66.68822ms
 ❄️  -------------------- ❄️
 ```
 
