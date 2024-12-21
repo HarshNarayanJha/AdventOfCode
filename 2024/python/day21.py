@@ -1,47 +1,46 @@
-from collections import defaultdict
-from itertools import product
+from itertools import product, permutations
 
 
-def path_to(target, current, keypad):
-    # print("Going from", current, "to", target, "in", keypad)
-    visited = set()
-    # Store (pos, path, path_length) in queue
-    queue = [(current, "", 0)]
-    shortest_paths = []
-    shortest_len = float("inf")
+def possible_paths(code, keypad):
+    possibles = []
+    cx, cy = keypad["A"]
 
-    while queue:
-        (curr_x, curr_y), path, path_len = queue.pop(0)
+    for c in code:
+        nx, ny = keypad[c]
+        dx, dy = nx - cx, ny - cy
 
-        if path_len > shortest_len:
-            continue
+        moves = ""
+        if dx > 0:
+            moves += "v" * dx
+        elif dx < 0:
+            moves += "^" * -dx
+        if dy > 0:
+            moves += ">" * dy
+        elif dy < 0:
+            moves += "<" * -dy
 
-        if (curr_x, curr_y) == target:
-            if path_len < shortest_len:
-                shortest_paths = [path + "A"]
-                shortest_len = path_len
-            elif path_len == shortest_len:
-                shortest_paths.append(path + "A")
-            continue
+        directions = {">": (0, 1), "<": (0, -1), "^": (-1, 0), "v": (1, 0)}
 
-        # Try all 4 directions
-        for dx, dy, dir_char in [(0, 1, ">"), (0, -1, "<"), (-1, 0, "^"), (1, 0, "v")]:
-            new_x = curr_x + dx
-            new_y = curr_y + dy
+        all_combos = list(set(["".join(x) + "A" for x in permutations(moves)]))
+        valid_combos = []
 
-            # Check if valid move
-            if (
-                new_x < 0
-                or new_x >= len(keypad)
-                or new_y < 0
-                or new_y >= len(keypad[0])
-                or keypad[new_x][new_y] == " "
-            ):
-                continue
+        for combo in all_combos:
+            valid = True
+            tcx, tcy = cx, cy
+            for c in combo[:-1]:
+                dx, dy = directions[c]
+                tcx, tcy = tcx + dx, tcy + dy
 
-            queue.append(((new_x, new_y), path + dir_char, path_len + 1))
+                if (tcx, tcy) not in keypad.values() or keypad[" "] == (tcx, tcy):
+                    valid = False
+                    break
+            if valid:
+                valid_combos.append(combo)
 
-    return shortest_paths if shortest_paths else []
+        possibles.append(valid_combos)
+        cx, cy = nx, ny
+
+    return ["".join(x) for x in product(*possibles)]
 
 
 def part1() -> int:
@@ -55,7 +54,6 @@ def part1() -> int:
         ["1", "2", "3"],
         [" ", "0", "A"],
     ]
-
     keypad_pos = {k: (i, j) for i, row in enumerate(keypad) for j, k in enumerate(row)}
 
     dir_keypad = [
@@ -66,80 +64,20 @@ def part1() -> int:
         k: (i, j) for i, row in enumerate(dir_keypad) for j, k in enumerate(row)
     }
 
-    arm_initial_1 = (3, 2)
-    arm_initial_2 = (0, 2)
-    arm_initial_3 = (0, 2)
-
-    current_1 = arm_initial_1
-    current_2 = arm_initial_2
-    current_3 = arm_initial_3
-
     complexities = 0
 
     for code in codes:
-        paths_1 = []
+        paths_1 = possible_paths(code, keypad_pos)
         paths_2 = []
+        for path in paths_1:
+            paths_2.extend(possible_paths(path, dir_keypad_pos))
         paths_3 = []
+        for path in paths_2:
+            paths_3.extend(possible_paths(path, dir_keypad_pos))
 
-        possible_paths_1 = []
-        possible_paths_2 = []
-        possible_paths_3 = []
-
-        for k in code:
-            dest_1 = keypad_pos[k]
-            seqs_1 = path_to(dest_1, current_1, keypad)
-
-            possible_paths_1.append(seqs_1)
-
-            print("Processing the code for", k, "found", seqs_1)
-            current_1 = dest_1
-
-        paths_1 = ["".join(c) for c in product(*possible_paths_1)]
-        paths_1 = paths_1[:1]
-        print(f"Found {len(paths_1)} paths 1")
-        print(paths_1)
-
-        for p in paths_1:
-            for s1 in p:
-                # print("Processing level 1 for", s1)
-                dest_2 = dir_keypad_pos[s1]
-                seqs_2 = path_to(dest_2, current_2, dir_keypad)
-
-                possible_paths_2.append(seqs_2)
-
-                current_2 = dest_2
-
-            current_2 = arm_initial_2
-
-        paths_2 = ["".join(c) for c in product(*possible_paths_2)]
-        # paths_2 = [paths_2[16]]
-
-        print(f"Found {len(paths_2)} paths 2")
-        print(paths_2)
-
-        for p in paths_2:
-            for s2 in p:
-                dest_3 = dir_keypad_pos[s2]
-                seqs_3 = path_to(dest_3, current_3, dir_keypad)
-
-                possible_paths_3.append(seqs_3)
-
-                current_3 = dest_3
-
-            current_3 = arm_initial_3
-
-        paths_3 = ["".join(c) for c in product(*possible_paths_3)]
-        paths_3 = paths_3[:1]
-        print(f"Found {len(paths_3)} paths 3")
-
-        print(paths_3)
-        print(paths_2)
-        print(paths_1)
         print(code)
 
-        print(len(min(paths_3)), "*", int(code.replace("A", "")))
-        print()
-        complexities += len(min(paths_3)) * int(code.replace("A", ""))
+        complexities += min([len(x) for x in paths_3]) * int(code.replace("A", ""))
 
     return complexities
 
