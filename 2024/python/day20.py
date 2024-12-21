@@ -30,11 +30,9 @@ def race(s, e, walls, H, W):
 
 
 def part1() -> int:
-    maze = []
+    maze = None
     with open("../data/input20.txt", "r") as inp:
-        lines = inp.readlines()
-        for line in lines:
-            maze.append(list(line.strip()))
+        maze = [list(line.strip()) for line in inp.readlines()]
 
     walls = set()
     sx, sy = 0, 0
@@ -88,11 +86,9 @@ def part1() -> int:
 
 
 def part2() -> int:
-    maze = []
+    maze = None
     with open("../data/input20.txt", "r") as inp:
-        lines = inp.readlines()
-        for line in lines:
-            maze.append(list(line.strip()))
+        maze = [list(line.strip()) for line in inp.readlines()]
 
     walls = set()
     sx, sy = 0, 0
