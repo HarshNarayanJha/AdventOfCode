@@ -82,8 +82,45 @@ def part1() -> int:
     return complexities
 
 
-def part2() -> int: ...
+def part2() -> int:
+    codes = None
+    with open("../data/input21.txt", "r") as inp:
+        codes = [line.strip() for line in inp.readlines()]
+
+    keypad = [
+        ["7", "8", "9"],
+        ["4", "5", "6"],
+        ["1", "2", "3"],
+        [" ", "0", "A"],
+    ]
+    keypad_pos = {k: (i, j) for i, row in enumerate(keypad) for j, k in enumerate(row)}
+
+    dir_keypad = [
+        [" ", "^", "A"],
+        ["<", "v", ">"],
+    ]
+    dir_keypad_pos = {
+        k: (i, j) for i, row in enumerate(dir_keypad) for j, k in enumerate(row)
+    }
+
+    complexities = 0
+
+    for code in codes:
+        paths = possible_paths(code, keypad_pos)
+        iterations = 24
+
+        for _ in range(iterations):
+            new_paths = []
+            for path in paths:
+                new_paths.extend(possible_paths(path, dir_keypad_pos))
+            paths = new_paths
+
+        print(code)
+
+        complexities += min([len(x) for x in paths]) * int(code.replace("A", ""))
+
+    return complexities
 
 
 print(part1())
-print(part2())
+# print(part2())
