@@ -10,9 +10,6 @@ def part1() -> int:
             csets[a] = csets[a] + (b,)
             csets[b] = csets[b] + (a,)
 
-    # print(len(csets))
-    # print(csets)
-
     lan_parties = []
 
     for s in csets:
@@ -45,9 +42,6 @@ def part2() -> int:
             csets[a] = csets[a] + (b,)
             csets[b] = csets[b] + (a,)
 
-    # print(len(csets))
-    print(dict(csets))
-
     max_group = set()
 
     for start in csets:
@@ -67,12 +61,12 @@ def part2() -> int:
         if len(visited) > len(max_group):
             max_group = visited.copy()
 
-    lan_parties = list((sorted(max_group)))
+    lan_parties = list(sorted(max_group))
 
     print(",".join(lan_parties))
 
     return 0
 
 
-# print(part1())
+print(part1())
 print(part2())
