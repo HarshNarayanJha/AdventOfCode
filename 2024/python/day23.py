@@ -52,11 +52,7 @@ def part2() -> int:
             current = to_visit.pop()
             if current not in visited and all([x in csets[current] for x in visited]):
                 visited.add(current)
-                to_visit.update(
-                    n
-                    for n in csets[current]
-                    if n not in visited and all([x in csets[n] for x in visited])
-                )
+                to_visit.update(n for n in csets[current] if n not in visited and all([x in csets[n] for x in visited]))
 
         if len(visited) > len(max_group):
             max_group = visited.copy()
