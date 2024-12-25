@@ -33,22 +33,20 @@ def part1() -> int:
             heights.append(height - 1)
         num_keys.append(heights)
 
-    print(num_locks)
-    print(num_keys)
-
     keys_worked = 0
 
     for lock in num_locks:
         for key in num_keys:
             if all([a + b <= 5 for a, b in zip(lock, key)]):
                 keys_worked += 1
-    # print(locks)
-    # print(keys)
 
     return keys_worked
 
 
-def part2() -> int: ...
+def part2() -> int:
+    print("No Part 2 for Day 25, AOC Completed!!!")
+
+    return 25
 
 
 print(part1())
