@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -o pipefail
+
 year=$(date +"%Y")
 if [ -z "$1" ]; then
     day=$(date +"%d")
