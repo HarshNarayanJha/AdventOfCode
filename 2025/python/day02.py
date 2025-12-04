@@ -1,5 +1,5 @@
 def part1() -> int:
-    with open("data/input2.txt", "r") as fp:
+    with open("../data/input02.txt", "r") as fp:
         line = fp.read().strip()
 
     ranges = line.split(",")
@@ -28,7 +28,7 @@ def part1() -> int:
 
 
 def part2() -> int:
-    with open("data/input2.txt", "r") as fp:
+    with open("../data/input02.txt", "r") as fp:
         line = fp.read().strip()
 
     ranges = line.split(",")
