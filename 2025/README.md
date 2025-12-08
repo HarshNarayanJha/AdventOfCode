@@ -40,6 +40,9 @@ python day06.py
 python day07.py
  Time (mean ± σ):      98.4 ms ±   2.1 ms    [User: 76.0 ms, System: 21.2 ms]
  Range (min … max):    94.4 ms … 103.1 ms    29 runs
+python day08.py
+ Time (mean ± σ):      1.081 s ±  0.010 s    [User: 0.992 s, System: 0.073 s]
+ Range (min … max):    1.064 s …  1.092 s    10 runs
 ```
 
 </details>
